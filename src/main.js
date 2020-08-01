@@ -1,4 +1,3 @@
-'use strict';
 const CARDS_COUNT = 5;
 const ADDITIONAL_CARDS_COUNT = 2;
 const render = (container, template, place) => {
