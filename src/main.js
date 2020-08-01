@@ -1,4 +1,4 @@
-import {createUserAvatarTemplate} from "./view/user-avatar";
+import {createUserAvatarTemplate} from "./view/avatar";
 import {createMainNavigationTemplate} from "./view/main-navigation";
 import {createSortTemplate} from "./view/sort";
 import {createFilmsListMostCommentedTemplate} from "./view/most-commented-films-list";
