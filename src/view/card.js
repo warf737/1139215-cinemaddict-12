@@ -1,5 +1,4 @@
 export const createCardTemplate = (film) => {
-  // console.table('film', film);
   const {title, rating, date, duration, genre, poster, description, comments} = film;
 
   return (

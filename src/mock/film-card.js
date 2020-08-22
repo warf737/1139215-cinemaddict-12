@@ -42,7 +42,7 @@ const generateFilmCard = () => {
     `Mystery`];
   const posters = [
     `made-for-each-other.png`,
-    `popeye-meets-sindbad.png`,
+    `popeye-meets-sinbad.png`,
     `sagebrush-trail.jpg`,
     `santa-claus-conquers-the-martians.jpg`,
     `the-dance-of-life.jpg`,
