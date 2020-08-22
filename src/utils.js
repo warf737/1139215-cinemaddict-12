@@ -5,3 +5,12 @@ export const getRandomInteger = (a = 0, b = 1) => {
 
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
+
+// функция для перемешивания массива
+export const getNewArray = (arr, arrLength = arr.length - 1) => {
+  const array = [];
+  for (let i = 0; i <= getRandomInteger(0, arrLength); i++) {
+    array.push(arr[i]);
+  }
+  return array;
+};
