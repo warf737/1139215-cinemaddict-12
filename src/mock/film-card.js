@@ -1,4 +1,4 @@
-import {getRandomInteger, getNewArray} from './utils';
+import {getRandomInteger, getNewArray} from '../utils';
 
 const getRating = () => {
   const min = 1;
@@ -43,11 +43,11 @@ const generateFilmCard = () => {
   const posters = [
     `made-for-each-other.png`,
     `popeye-meets-sindbad.png`,
-    `sagebrush-trail.png`,
-    `santa-claus-conquers-the-martians.png`,
-    `the-dance-of-life.png`,
-    `the-great-flamarion.png`,
-    `the-man-with-the-golden-arm.png`,
+    `sagebrush-trail.jpg`,
+    `santa-claus-conquers-the-martians.jpg`,
+    `the-dance-of-life.jpg`,
+    `the-great-flamarion.jpg`,
+    `the-man-with-the-golden-arm.jpg`,
   ];
   const descriptions = [
     `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
@@ -94,14 +94,14 @@ const generateFilmCard = () => {
   }];
 
   return {
-    movieTitle: titles[getRandomInteger(0, titles.length - 1)],
+    title: titles[getRandomInteger(0, titles.length - 1)],
     age: ages[getRandomInteger(0, ages.length - 1)],
     director: directors[getRandomInteger(0, directors.length - 1)],
     writers: getNewArray(writers).join(`, `),
     actors: getNewArray(actors).join(`, `),
     rating: getRating(),
     date: new Date(getRandomInteger(startDate, finalDate)),
-    genreName: getNewArray(genres).join(`, `),
+    genre: getNewArray(genres).join(`, `),
     poster: posters[getRandomInteger(0, posters.length - 1)],
     description: getNewArray(descriptions, getRandomInteger(0, descriptions.length - 1)).join(` `),
     country: countries[getRandomInteger(0, countries.length - 1)],
