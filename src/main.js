@@ -10,6 +10,7 @@ import {createPopUptemplate} from "./view/popup";
 import {createShowMoreButton} from "./view/load-more-button";
 import {generateFilmCards} from "./mock/film-card";
 import {getRandomInteger} from "./utils";
+
 const FILMS_COUNT = 17;
 const CARDS_COUNT = 5;
 const ADDITIONAL_CARDS_COUNT = 2;
@@ -49,6 +50,19 @@ render(filmsMainElement, createFilmsListMostCommentedTemplate(), `beforeend`);
 
 // button 'show more'
 render(filmsListElement, createShowMoreButton(), `beforeend`);
+// показ карточек фильма по нажатию на кнопку показать больше
+const loadMoreButton = filmsMainElement.querySelector(`.films-list__show-more`);
+loadMoreButton.addEventListener(`click`, () => {
+  const prevCards = displayingCardsCount;
+  displayingCardsCount = displayingCardsCount + CARDS_COUNT;
+
+  films.slice(prevCards, displayingCardsCount)
+    .forEach((film) => render(filmsListContainerElement, createCardTemplate(film), `beforeend`));
+
+  if (displayingCardsCount >= films.length) {
+    loadMoreButton.remove();
+  }
+});
 
 // more films
 const additionalFilmsElement = filmsMainElement.querySelectorAll(`.films-list--extra`);
