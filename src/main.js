@@ -76,5 +76,5 @@ additionalFilmsElement.forEach((element) => {
 
 
 // footer
-// const footerElement = document.querySelector(`.footer`);
-// render(footerElement, createPopUptemplate(), `afterend`);
+const footerElement = document.querySelector(`.footer`);
+render(footerElement, createPopUptemplate(films[getRandomInteger(0, films.length - 1)]), `afterend`);

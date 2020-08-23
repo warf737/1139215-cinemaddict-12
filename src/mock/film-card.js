@@ -35,12 +35,12 @@ const generateFilmCard = () => {
     `Dan Duryea`
   ];
   const genres = [
-    `Drama`,
-    `Film-Noir`,
-    `Mystery`,
-    `Drama`,
-    `Film-Noir`,
-    `Mystery`];
+    ` Drama`,
+    ` Film-Noir`,
+    ` Mystery`,
+    ` Drama`,
+    ` Film-Noir`,
+    ` Mystery`];
   const posters = [
     `made-for-each-other.png`,
     `popeye-meets-sinbad.png`,
@@ -104,7 +104,7 @@ const generateFilmCard = () => {
     actors: getNewArray(actors).join(`, `),
     rating: getRating(),
     date: new Date(getRandomInteger(startDate, finalDate)),
-    genre: getNewArray(genres).join(`, `),
+    genres: getNewArray(genres),
     poster: posters[getRandomInteger(0, posters.length - 1)],
     description: getNewArray(descriptions, getRandomInteger(0, descriptions.length - 1)).join(` `),
     country: countries[getRandomInteger(0, countries.length - 1)],

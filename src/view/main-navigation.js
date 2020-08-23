@@ -1,7 +1,6 @@
 import {filterNames, cardfilters} from "../const";
 
 const getNameFilter = (array, name) => {
-  console.log(array, name);
   return array.filter((element) => {
     return element[name] === `true`;
   });
