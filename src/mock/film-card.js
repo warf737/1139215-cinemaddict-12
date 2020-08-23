@@ -14,7 +14,8 @@ const generateFilmCard = () => {
     `Santa Claus Conquers the Martians`,
     `Popeye the Sailor Meets Sindbad the Sailor`
   ];
-  const ages = [`18`,
+  const ages = [
+    `18`,
     `6`,
     `12`
   ];
@@ -71,6 +72,8 @@ const generateFilmCard = () => {
   const startDate = new Date(1920, 3, 5).getTime();
   const startDateComment = new Date(2020, 1, 5).getTime();
   const finalDate = new Date(2020, 3, 27).getTime();
+  const durations = [`1h 20m`, `2h 15m`, `1h 45m`];
+  const booleanValues = [`true`, `false`];
   const comments = [{
     text: `Interesting setting and a good cast`,
     author: `Tim Macoveev`,
@@ -106,10 +109,10 @@ const generateFilmCard = () => {
     description: getNewArray(descriptions, getRandomInteger(0, descriptions.length - 1)).join(` `),
     country: countries[getRandomInteger(0, countries.length - 1)],
     comments: getNewArray(comments),
-    isFavorite: Math.random() > 0.5,
-    isHistory: Math.random() > 0.5,
-    isWatchlist: Math.random() > 0.5,
-    duration: getRandomInteger(60, 180),
+    isFavorite: booleanValues[getRandomInteger(0, booleanValues.length - 1)],
+    isHistory: booleanValues[getRandomInteger(0, booleanValues.length - 1)],
+    isWatchlist: booleanValues[getRandomInteger(0, booleanValues.length - 1)],
+    duration: durations[getRandomInteger(0, durations.length - 1)],
   };
 };
 

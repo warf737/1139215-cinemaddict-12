@@ -26,7 +26,7 @@ render(siteHeaderElement, createUserAvatarTemplate(), `beforeend`);
 
 // main
 const siteMainElement = document.querySelector(`.main`);
-render(siteMainElement, createMainNavigationTemplate(), `beforeend`);
+render(siteMainElement, createMainNavigationTemplate(films), `beforeend`);
 render(siteMainElement, createSortTemplate(), `beforeend`);
 render(siteMainElement, createFilmsTemplate(), `beforeend`);
 
