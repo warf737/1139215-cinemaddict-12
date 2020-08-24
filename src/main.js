@@ -28,30 +28,26 @@ render(siteHeaderElement, createUserAvatarTemplate(), `beforeend`);
 const siteMainElement = document.querySelector(`.main`);
 render(siteMainElement, createMainNavigationTemplate(films), `beforeend`);
 render(siteMainElement, createSortTemplate(), `beforeend`);
-render(siteMainElement, createFilmsTemplate(), `beforeend`);
+// render(siteMainElement, createFilmsTemplate(), `beforeend`);
 
 // main - films
-const filmsMainElement = document.querySelector(`.films`);
-render(filmsMainElement, createFilmsListTemplate(), `beforeend`);
+// const filmsMainElement = document.querySelector(`.films`);
+render(siteMainElement, createFilmsListTemplate(), `beforeend`);
+
 
 // main - films - films-elements - film
-const filmsListElement = filmsMainElement.querySelector(`.films-list`);
+const filmsListElement = siteMainElement.querySelector(`.films .films-list`);
 const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
 let displayingCardsCount = CARDS_COUNT;
 films.slice(0, displayingCardsCount).forEach((film) => render(
     filmsListContainerElement, createCardTemplate(film), `beforeend`)
 );
 
-// top rated
-render(filmsMainElement, createFilmsListTopRatedTemplate(), `beforeend`);
-
-// most commented
-render(filmsMainElement, createFilmsListMostCommentedTemplate(), `beforeend`);
-
 // button 'show more'
 render(filmsListElement, createShowMoreButton(), `beforeend`);
+
 // показ карточек фильма по нажатию на кнопку показать больше
-const loadMoreButton = filmsMainElement.querySelector(`.films-list__show-more`);
+const loadMoreButton = filmsListElement.querySelector(`.films-list__show-more`);
 loadMoreButton.addEventListener(`click`, () => {
   const prevCards = displayingCardsCount;
   displayingCardsCount = displayingCardsCount + CARDS_COUNT;
@@ -64,8 +60,14 @@ loadMoreButton.addEventListener(`click`, () => {
   }
 });
 
+// top rated
+render(filmsListElement, createFilmsListTopRatedTemplate(), `afterend`);
+
+// most commented
+render(filmsListElement, createFilmsListMostCommentedTemplate(), `afterend`);
+
 // more films
-const additionalFilmsElement = filmsMainElement.querySelectorAll(`.films-list--extra`);
+const additionalFilmsElement = siteMainElement.querySelectorAll(`.films-list--extra`);
 
 additionalFilmsElement.forEach((element) => {
   let elementContainer = element.querySelector(`.films-list__container`);
@@ -77,4 +79,4 @@ additionalFilmsElement.forEach((element) => {
 
 // footer
 const footerElement = document.querySelector(`.footer`);
-render(footerElement, createPopUptemplate(films[getRandomInteger(0, films.length - 1)]), `afterend`);
+// render(footerElement, createPopUptemplate(films[getRandomInteger(0, films.length - 1)]), `afterend`);
