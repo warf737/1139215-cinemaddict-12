@@ -34,8 +34,8 @@ const renderFilmCard = (filmListElement, film) => {
     }
   };
 
-  const onHandlerClick = (elem) => {
-    elem.addEventListener(`click`, (evt) => {
+  const onHandlerClick = (element) => {
+    element.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       siteBody.appendChild(DetailPopupComponent.getElement());
       document.addEventListener(`keydown`, onEscKeyDown);
@@ -49,7 +49,7 @@ const renderFilmCard = (filmListElement, film) => {
 
   const poster = filmCardComponent.getElement().querySelector(`.film-card__poster`);
   const name = filmCardComponent.getElement().querySelector(`.film-card__title`);
-  const comment = filmCardComponent.getElement().querySelector(`.film-card__ comments`);
+  const comment = filmCardComponent.getElement().querySelector(`.film-card__comments`);
 
   onHandlerClick(poster);
   onHandlerClick(name);
