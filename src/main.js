@@ -7,7 +7,7 @@ import DetailPopupView from "./view/popup";
 import LoadMoreButtonView from "./view/load-more-button";
 import {generateFilmCards} from "./mock/film-card";
 import {getRandomInteger, render, RenderPosition} from "./utils";
-import NoFilmCardsView from "./view/no-film-cards";
+// import NoFilmCardsView from "./view/no-film-cards";
 
 const FILMS_COUNT = 22;
 const CARDS_COUNT = 5;
@@ -67,7 +67,7 @@ const renderFilmCard = (filmListElement, film) => {
 const renderFilmsListComponent = () => {
   const filmsListElement = siteMainElement.querySelector(`.films-list`);
 
-  if (films.length < 1) {
+  if (films.length < 1 || !films) {
     render(filmsListElement, new NoFilmCardsView().getElement(), RenderPosition.BEFOREEND);
     return;
   }
