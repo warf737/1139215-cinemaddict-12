@@ -7,8 +7,9 @@ import DetailPopupView from "./view/popup";
 import LoadMoreButtonView from "./view/load-more-button";
 import {generateFilmCards} from "./mock/film-card";
 import {getRandomInteger, render, RenderPosition} from "./utils";
+import NoFilmCardsView from "./view/no-film-cards";
 
-const FILMS_COUNT = 17;
+const FILMS_COUNT = 22;
 const CARDS_COUNT = 5;
 const ADDITIONAL_CARDS_COUNT = 2;
 const films = generateFilmCards(FILMS_COUNT);
@@ -64,8 +65,13 @@ const renderFilmCard = (filmListElement, film) => {
 };
 
 const renderFilmsListComponent = () => {
-
   const filmsListElement = siteMainElement.querySelector(`.films-list`);
+
+  if (films.length < 1) {
+    render(filmsListElement, new NoFilmCardsView().getElement(), RenderPosition.BEFOREEND);
+    return;
+  }
+
   // main - films - films-elements - film
   const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
 
