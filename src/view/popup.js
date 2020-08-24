@@ -1,3 +1,4 @@
+import {createElement} from "../utils.js";
 import {emojies} from "../const";
 
 const createGenresMarkup = (genres) => {
@@ -70,7 +71,7 @@ const createCommentsWrapMarkup = (comments, commentsMarkup, emojiListMarkup) => 
 };
 
 
-export const createPopUptemplate = (film) => {
+const createPopUpTemplate = (film) => {
   const {poster, title, age, director, writers, actors, rating, date, duration, country, genres, description, comments} = film;
   const commentsMarkup = createCommentsMarkup(comments);
   const genresMarkup = createGenresMarkup(genres);
@@ -161,3 +162,27 @@ export const createPopUptemplate = (film) => {
   </section>`
   );
 };
+
+export default class DetailPopup {
+  constructor(film) {
+    this._film = film;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPopUpTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
