@@ -1,4 +1,4 @@
-import {createElement} from "../utils/render";
+import Abstract from "./abstract";
 import {filterNames, cardfilters} from "../const";
 
 const getNameFilter = (array, name) => {
@@ -30,25 +30,14 @@ export const createMainNavigationTemplate = (films) => {
   );
 };
 
-export default class MainNavigation {
+export default class MainNavigation extends Abstract {
   constructor(films) {
+    super();
     this._films = films;
-    this._element = null;
   }
 
   getTemplate() {
     return createMainNavigationTemplate(this._films);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
 }

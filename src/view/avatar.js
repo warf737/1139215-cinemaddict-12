@@ -1,4 +1,4 @@
-import {createElement} from "../utils/render";
+import Abstract from "./abstract";
 
 const createUserAvatarTemplate = () =>
   `<section class="header__profile profile">
@@ -6,24 +6,10 @@ const createUserAvatarTemplate = () =>
    <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
  </section>`;
 
-export default class UserAvatar {
-  constructor() {
-    this._element = null;
-  }
+export default class UserAvatar extends Abstract {
 
   getTemplate() {
     return createUserAvatarTemplate();
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
 }

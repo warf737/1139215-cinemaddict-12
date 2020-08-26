@@ -1,4 +1,4 @@
-import {createElement} from "../utils/utils.js";
+import Abstract from "./abstract";
 import {emojies} from "../const";
 
 const createGenresMarkup = (genres) => {
@@ -163,26 +163,14 @@ const createPopUpTemplate = (film) => {
   );
 };
 
-export default class DetailPopup {
+export default class DetailPopup extends Abstract {
   constructor(film) {
+    super();
     this._film = film;
-
-    this._element = null;
   }
 
   getTemplate() {
     return createPopUpTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
 }
