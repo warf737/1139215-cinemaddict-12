@@ -6,7 +6,7 @@ import FilmCardView from "./view/card";
 import DetailPopupView from "./view/popup";
 import LoadMoreButtonView from "./view/load-more-button";
 import {generateFilmCards} from "./mock/film-card";
-import {getRandomInteger, render, RenderPosition} from "./utils";
+import {getRandomInteger, render, RenderPosition} from "./utils/common";
 import NoFilmCardsView from "./view/no-film-cards";
 
 const FILMS_COUNT = 22;

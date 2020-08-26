@@ -1,4 +1,4 @@
-import {getRandomInteger, getNewArray} from '../utils';
+import {getRandomInteger, getNewArray} from '../utils/common';
 
 const getRating = () => {
   const min = 1;

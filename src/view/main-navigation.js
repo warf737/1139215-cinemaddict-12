@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import {createElement} from "../utils/render";
 import {filterNames, cardfilters} from "../const";
 
 const getNameFilter = (array, name) => {
