@@ -109,9 +109,9 @@ const generateFilmCard = () => {
     description: getNewArray(descriptions, getRandomInteger(0, descriptions.length - 1)).join(` `),
     country: countries[getRandomInteger(0, countries.length - 1)],
     comments: getNewArray(comments),
-    isFavorite: booleanValues[getRandomInteger(0, booleanValues.length - 1)],
-    isHistory: booleanValues[getRandomInteger(0, booleanValues.length - 1)],
-    isWatchlist: booleanValues[getRandomInteger(0, booleanValues.length - 1)],
+    isFavorite: Math.random() > 0.5,
+    isHistory: Math.random() > 0.5,
+    isWatchlist: Math.random() > 0.5,
     duration: durations[getRandomInteger(0, durations.length - 1)],
   };
 };

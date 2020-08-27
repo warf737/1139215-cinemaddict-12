@@ -173,4 +173,9 @@ export default class DetailPopup extends Abstract {
     return createPopUpTemplate(this._film);
   }
 
+  setButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__close-btn`)
+      .addEventListener(`click`, handler);
+  }
+
 }

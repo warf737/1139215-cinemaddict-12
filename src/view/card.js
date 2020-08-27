@@ -34,4 +34,10 @@ export default class FilmCard extends Abstract {
     return createCardTemplate(this._film);
   }
 
+  setButtonsClickHandler(handler) {
+    this.getElement().querySelectorAll(`.film-card__poster, .film-card__title, .film-card__comments`)
+      .forEach((element) => {
+        element.addEventListener(`click`, handler);
+      });
+  }
 }
