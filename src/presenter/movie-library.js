@@ -54,7 +54,7 @@ const getSortedFilmCards = (films, sort, from, to) => {
       sortedFilms = showingFilms;
       break;
     case sortType.DATE_UP:
-      sortedFilms = showingFilms.sort((a, b) => b.date - a.date);
+      sortedFilms = showingFilms.sort((a, b) => a.date - b.date);
       break;
     case sortType.RATING_DOWN:
       sortedFilms = showingFilms.sort((a, b) => b.rating - a.rating);
@@ -119,6 +119,7 @@ export default class MovieList {
     renderLoadMoreButton();
 
     this._sortComponent.changeSortTypeHandler((type) => {
+
       displayingCardsCount = CARDS_COUNT;
 
       const sortedFilms = getSortedFilmCards(films, type, 0, 5);
