@@ -27,18 +27,17 @@ export default class Sort extends Abstract {
     sortComponent.addEventListener(`click`, (evt) => {
       evt.preventDefault();
 
-
-      sortComponent.querySelectorAll(`.sort__button`).forEach((element) => {
-        if (element.classList.contains(`sort__button--active`)) {
-          element.classList.remove(`sort__button--active`);
-        }
-      });
-
       if (evt.target.tagName !== `A`) {
         return;
       }
 
       const type = evt.target.dataset.sortType;
+
+      sortComponent.querySelectorAll(`.sort__button`).forEach((element) => {
+        if (element.classList.contains(`sort__button--active`) && this._currentSortType !== type) {
+          element.classList.remove(`sort__button--active`);
+        }
+      });
 
       if (this._currentSortType === type) {
         return;
@@ -48,6 +47,7 @@ export default class Sort extends Abstract {
 
       handler(this._currentSortType);
       sortComponent.querySelector(`[data-sort-type=${type}]`).classList.add(`sort__button--active`);
+
     });
   }
 }
