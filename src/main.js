@@ -1,7 +1,6 @@
 import MovieList from "./presenter/movie-library";
 import UserAvatarView from "./view/avatar";
 import MainNavigationView from "./view/main-navigation";
-import SortView from "./view/sort";
 import FilmsList from "./view/films-list";
 import {generateFilmCards} from "./mock/film-card";
 import {render, RenderPosition} from "./utils/render";
@@ -17,8 +16,6 @@ render(siteHeaderElement, new UserAvatarView(), RenderPosition.BEFOREEND);
 const siteMainElement = document.querySelector(`.main`);
 // main - navigation
 render(siteMainElement, new MainNavigationView(films), RenderPosition.BEFOREEND);
-// main - sort
-render(siteMainElement, new SortView(), RenderPosition.BEFOREEND);
 // main - films-list
 const filmsList = new FilmsList();
 render(siteMainElement, filmsList, RenderPosition.BEFOREEND);
