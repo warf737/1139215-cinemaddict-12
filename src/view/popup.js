@@ -1,4 +1,4 @@
-import Abstract from "./abstract";
+import AbstractSmartComponent from "./abstract-smart";
 import {emojies} from "../const";
 
 const createGenresMarkup = (genres) => {
@@ -168,19 +168,60 @@ const createPopUpTemplate = (film) => {
   );
 };
 
-export default class DetailPopup extends Abstract {
+export default class DetailPopup extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
+    this._clickHandler = null;
+
+    this._subscribeToEvents();
   }
 
   getTemplate() {
     return createPopUpTemplate(this._film);
   }
 
+  recoveryListeners() {
+    this.closeButtonClickHandler(this._clickHandler);
+    this._subscribeToEvents();
+  }
+
+  rerender() {
+    super.rerender();
+  }
+
   closeButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
+
+    this._clickHandler = handler;
   }
 
+  _subscribeToEvents() {
+    const element = this.getElement();
+    const emojiElement = element.querySelector(`.film-details__add-emoji-label`);
+
+    element.querySelectorAll(`.film-details__emoji-label`)
+      .forEach((el) => {
+        el.addEventListener(`click`, () => {
+          const link = el.querySelector(`img`).src;
+          emojiElement.innerHTML = `<img src=${link} width="55" height="55" alt="emoji">`;
+        });
+      });
+  }
+
+  setWatchlistButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--watchlist`)
+      .addEventListener(`click`, handler);
+  }
+
+  setHistoryButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--watched`)
+      .addEventListener(`click`, handler);
+  }
+
+  setFavoritesButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--favorite`)
+      .addEventListener(`click`, handler);
+  }
 }

@@ -10,9 +10,9 @@ import CardPresenter from "./card";
 const CARDS_COUNT = 5;
 const ADDITIONAL_CARDS_COUNT = 2;
 
-const renderFilmCards = (filmElement, films) => {
+const renderFilmCards = (filmElement, films, onDataChange, onViewChange) => {
   return films.map((film) => {
-    const cardPresenter = new CardPresenter(filmElement);
+    const cardPresenter = new CardPresenter(filmElement, onDataChange, onViewChange);
     cardPresenter.render(film);
     return cardPresenter;
   });
@@ -49,6 +49,8 @@ export default class MovieListPresenter {
     this._loadMoreButton = new LoadMoreButtonView();
     this._sortComponent = new SortView();
 
+    this._onDataChange = this._onDataChange.bind(this);
+    this._onViewChange = this._onViewChange.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._sortComponent.changeSortTypeHandler(this._onSortTypeChange);
 
@@ -66,7 +68,7 @@ export default class MovieListPresenter {
 
     render(this._container, this._sortComponent, RenderPosition.AFTERBEGIN);
 
-    const newFilmCards = renderFilmCards(this._filmsListContainer, this._films.slice(0, this._displayingCardsCount));
+    const newFilmCards = renderFilmCards(this._filmsListContainer, this._films.slice(0, this._displayingCardsCount), this._onDataChange, this._onViewChange);
     this._showedFilmCards = this._showedFilmCards.concat(newFilmCards);
     this._renderLoadMoreButton();
 
@@ -94,7 +96,7 @@ export default class MovieListPresenter {
       this._displayingCardsCount = this._displayingCardsCount + CARDS_COUNT;
 
       const sortedFilms = getSortedFilmCards(this._films, this._sortComponent.getSortType(), prevCards, this._displayingCardsCount);
-      const newFilmCards = renderFilmCards(this._filmsListContainer, sortedFilms);
+      const newFilmCards = renderFilmCards(this._filmsListContainer, sortedFilms, this._onDataChange, this._onViewChange);
       this._showedFilmCards = this._showedFilmCards.concat(newFilmCards);
 
       if (this._displayingCardsCount >= this._films.length) {
@@ -108,10 +110,24 @@ export default class MovieListPresenter {
 
     this._filmsListContainer.innerHTML = ``;
 
-    const newFilmCards = renderFilmCards(this._filmsListContainer, sortedFilms);
+    const newFilmCards = renderFilmCards(this._filmsListContainer, sortedFilms, this._onDataChange, this._onViewChange);
     this._showedFilmCards = newFilmCards;
     remove(this._loadMoreButton);
     this._renderLoadMoreButton();
 
+  }
+  _onDataChange(filmCardController, oldData, newData) {
+    const index = this._films.findIndex((it) => it === oldData);
+
+    if (index === -1) {
+      return;
+    }
+
+    this._films = [].concat(this._films.slice(0, index), newData, this._films.slice(index));
+
+    filmCardController.render(this._films[index]);
+  }
+  _onViewChange() {
+    this._showedFilmCards.forEach((film) => film.setDefaultView());
   }
 }
