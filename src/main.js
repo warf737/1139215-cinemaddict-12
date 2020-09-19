@@ -1,4 +1,4 @@
-import MovieList from "./presenter/movie-library";
+import MovieListPresenter from "./presenter/movie-library";
 import UserAvatarView from "./view/avatar";
 import MainNavigationView from "./view/main-navigation";
 import FilmsList from "./view/films-list";
@@ -20,5 +20,5 @@ render(siteMainElement, new MainNavigationView(films), RenderPosition.BEFOREEND)
 const filmsList = new FilmsList();
 render(siteMainElement, filmsList, RenderPosition.BEFOREEND);
 
-const movieList = new MovieList(filmsList);
+const movieList = new MovieListPresenter(filmsList);
 movieList.render(films);
