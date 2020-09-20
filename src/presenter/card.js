@@ -14,6 +14,9 @@ export default class FilmCardPresenter {
     this._onDataChange = onDataChange;
     this._onViewChange = onViewChange;
     this._mode = Mode.DEFAULT;
+
+    this._filmCardComponent = null;
+    this._detailPopupComponent = null;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
   }
 
@@ -33,11 +36,11 @@ export default class FilmCardPresenter {
       render(this._container, this._filmCardComponent, RenderPosition.BEFOREEND);
     }
 
-    render(this._container, this._filmCardComponent, RenderPosition.BEFOREEND);
-
     this._filmCardComponent.setButtonsClickHandler(() => {
+      this._onViewChange();
       siteBody.appendChild(this._detailPopupComponent.getElement());
       document.addEventListener(`keydown`, this._onEscKeyDown);
+      this._mode = Mode.EDIT;
     });
 
     this._filmCardComponent.setWatchlistButtonClickHandler(() => {
@@ -45,11 +48,23 @@ export default class FilmCardPresenter {
     });
 
     this._filmCardComponent.setFavoritesButtonClickHandler(() => {
-      this._onDataChange(this, film, Object.assign({}, film, {isFavorite: !film.isfavorite}));
+      this._onDataChange(this, film, Object.assign({}, film, {isFavorite: !film.isFavorite}));
     });
 
     this._filmCardComponent.setHistoryButtonClickHandler(() => {
+      this._onDataChange(this, film, Object.assign({}, film, {isHistory: !film.isHistory}));
+    });
+
+    this._detailPopupComponent.setWatchlistButtonClickHandler(() => {
+      this._onDataChange(this, film, Object.assign({}, film, {isWatchlist: !film.isWatchlist}));
+    });
+
+    this._detailPopupComponent.setFavoritesButtonClickHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {isFavorite: !film.isFavorite}));
+    });
+
+    this._detailPopupComponent.setHistoryButtonClickHandler(() => {
+      this._onDataChange(this, film, Object.assign({}, film, {isHistory: !film.isHistory}));
     });
 
     this._detailPopupComponent.closeButtonClickHandler(() => {
@@ -58,19 +73,20 @@ export default class FilmCardPresenter {
   }
 
   setDefaultView() {
-    if (this._mode !== Mode.DEFAULT) {}
-    this._closeCard();
+    if (this._mode !== Mode.DEFAULT) {
+      this._closeCard();
+    }
   }
 
   _closeCard() {
     remove(this._detailPopupComponent);
     document.removeEventListener(`keydown`, this._onEscKeyDown);
-    this._closeCard().reset();
+    this._detailPopupComponent.reset();
     this._mode = Mode.DEFAULT;
   }
 
   _onEscKeyDown(evt) {
-    const isEscKey = evt.key === `escape` || evt.key === `Esc`;
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
 
     if (isEscKey) {
       this._closeCard();

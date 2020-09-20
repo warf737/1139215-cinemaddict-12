@@ -190,6 +190,10 @@ export default class DetailPopup extends AbstractSmartComponent {
     super.rerender();
   }
 
+  reset() {
+    this.rerender();
+  }
+
   closeButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
