@@ -72,7 +72,7 @@ const createCommentsWrapMarkup = (comments, commentsMarkup, emojiListMarkup) => 
 
 const createButtonMarkup = (name, content, isChecked) => {
   return (
-    `<input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="${name}" ${isChecked ? `checked` : ``}>
+    `<input type="checkbox" class="film-details__control-input film-details__control-input--${name} visually-hidden" id="${name}" name="${name}" ${isChecked ? `checked` : ``}>
       <label for="${name}" class="film-details__control-label film-details__control-label--${name}">${content}</label>`
   );
 };
