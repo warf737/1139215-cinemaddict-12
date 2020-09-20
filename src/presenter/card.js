@@ -1,6 +1,8 @@
 import FilmCardView from "../view/card";
 import DetailPopupView from "../view/popup";
-import {remove, replace, render, RenderPosition} from "../utils/render";
+import {replace, render, RenderPosition} from "../utils/render";
+
+const siteBody = document.querySelector(`body`);
 
 const Mode = {
   DEFAULT: `default`,
@@ -27,11 +29,11 @@ export default class FilmCardPresenter {
     this._filmCardComponent = new FilmCardView(film);
     this._detailPopupComponent = new DetailPopupView(film);
 
-    const siteBody = document.querySelector(`body`);
-
     if (oldFilmCardComponent && oldDetailPopupComponent) {
       replace(this._filmCardComponent, oldFilmCardComponent);
-      replace(this._detailPopupComponent, oldDetailPopupComponent);
+      if (this._mode === Mode.EDIT) {
+        replace(this._detailPopupComponent, oldDetailPopupComponent);
+      }
     } else {
       render(this._container, this._filmCardComponent, RenderPosition.BEFOREEND);
     }
@@ -57,14 +59,17 @@ export default class FilmCardPresenter {
 
     this._detailPopupComponent.setWatchlistButtonClickHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {isWatchlist: !film.isWatchlist}));
+      this._mode = Mode.EDIT;
     });
 
     this._detailPopupComponent.setFavoritesButtonClickHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {isFavorite: !film.isFavorite}));
+      this._mode = Mode.EDIT;
     });
 
     this._detailPopupComponent.setHistoryButtonClickHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {isHistory: !film.isHistory}));
+      this._mode = Mode.EDIT;
     });
 
     this._detailPopupComponent.closeButtonClickHandler(() => {
@@ -79,7 +84,7 @@ export default class FilmCardPresenter {
   }
 
   _closeCard() {
-    remove(this._detailPopupComponent);
+    siteBody.removeChild(this._detailPopupComponent);
     document.removeEventListener(`keydown`, this._onEscKeyDown);
     this._detailPopupComponent.reset();
     this._mode = Mode.DEFAULT;

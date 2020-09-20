@@ -1,4 +1,4 @@
-import MovieListPresenter from "./presenter/movie-library";
+import MovieListPresenter from "./presenter/board";
 import UserAvatarView from "./view/avatar";
 import MainNavigationView from "./view/main-navigation";
 import FilmsList from "./view/films-list";

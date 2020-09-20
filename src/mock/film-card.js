@@ -72,7 +72,7 @@ const generateFilmCard = () => {
   const startDate = new Date(1920, 3, 5).getTime();
   const startDateComment = new Date(2020, 1, 5).getTime();
   const finalDate = new Date(2020, 3, 27).getTime();
-  const durations = [`1h 20m`, `2h 15m`, `1h 45m`];
+  const duration = {min: 45, max: 140};
   // const booleanValues = [`true`, `false`];
   const comments = [{
     text: `Interesting setting and a good cast`,
@@ -112,7 +112,7 @@ const generateFilmCard = () => {
     isFavorite: Math.random() > 0.5,
     isHistory: Math.random() > 0.5,
     isWatchlist: Math.random() > 0.5,
-    duration: durations[getRandomInteger(0, durations.length - 1)],
+    duration: getRandomInteger(duration.min, duration.max),
   };
 };
 

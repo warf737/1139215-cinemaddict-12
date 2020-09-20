@@ -1,5 +1,6 @@
 import AbstractSmartComponent from "./abstract-smart";
 import {emojies} from "../const";
+import {formatTime, formatPopupDate, formatCommentDate} from "../utils/moment";
 
 const createGenresMarkup = (genres) => {
   return genres
@@ -23,7 +24,7 @@ const createCommentsMarkup = (comments) => {
             <p class="film-details__comment-text">${comment.text}</p>
             <p class="film-details__comment-info">
               <span class="film-details__comment-author">${comment.author}</span>
-              <span class="film-details__comment-day">${comment.day}</span>
+              <span class="film-details__comment-day">${formatCommentDate(comment.day)}</span>
               <button class="film-details__comment-delete">Delete</button>
             </p>
           </div>
@@ -130,11 +131,11 @@ const createPopUpTemplate = (film) => {
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Release Date</td>
-                <td class="film-details__cell">${date.getDate()} ${date.getMonth()} ${date.getFullYear()}</td>
+                <td class="film-details__cell">${formatPopupDate(date)}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Runtime</td>
-                <td class="film-details__cell">${duration}</td>
+                <td class="film-details__cell">${formatTime(duration)}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Country</td>
