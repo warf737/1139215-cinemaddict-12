@@ -174,6 +174,9 @@ export default class DetailPopup extends AbstractSmartComponent {
     super();
     this._film = film;
     this._clickHandler = null;
+    this._watchListHandler = null;
+    this._historyHandler = null;
+    this._favoritesHandler = null;
 
     this._subscribeToEvents();
   }
@@ -185,14 +188,13 @@ export default class DetailPopup extends AbstractSmartComponent {
   recoveryListeners() {
     this.closeButtonClickHandler(this._clickHandler);
     this._subscribeToEvents();
+    this.setWatchlistButtonClickHandler(this._watchListHandler);
+    this.setHistoryButtonClickHandler(this._historyHandler);
+    this.setFavoritesButtonClickHandler(this._favoritesHandler);
   }
 
   rerender() {
     super.rerender();
-  }
-
-  reset() {
-    this.rerender();
   }
 
   closeButtonClickHandler(handler) {
@@ -216,17 +218,17 @@ export default class DetailPopup extends AbstractSmartComponent {
   }
 
   setWatchlistButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-label--watchlist`)
-      .addEventListener(`click`, handler);
+    this.getElement().querySelector(`.film-details__control-input--watchlist`)
+      .addEventListener(`change`, handler);
   }
 
   setHistoryButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-label--watched`)
-      .addEventListener(`click`, handler);
+    this.getElement().querySelector(`.film-details__control-input--watched`)
+      .addEventListener(`change`, handler);
   }
 
   setFavoritesButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-label--favorite`)
-      .addEventListener(`click`, handler);
+    this.getElement().querySelector(`.film-details__control-input--favorite`)
+      .addEventListener(`change`, handler);
   }
 }

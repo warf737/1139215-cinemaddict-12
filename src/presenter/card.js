@@ -29,15 +29,6 @@ export default class FilmCardPresenter {
     this._filmCardComponent = new FilmCardView(film);
     this._detailPopupComponent = new DetailPopupView(film);
 
-    if (oldFilmCardComponent && oldDetailPopupComponent) {
-      replace(this._filmCardComponent, oldFilmCardComponent);
-      if (this._mode === Mode.EDIT) {
-        replace(this._detailPopupComponent, oldDetailPopupComponent);
-      }
-    } else {
-      render(this._container, this._filmCardComponent, RenderPosition.BEFOREEND);
-    }
-
     this._filmCardComponent.setButtonsClickHandler(() => {
       this._onViewChange();
       siteBody.appendChild(this._detailPopupComponent.getElement());
@@ -72,9 +63,19 @@ export default class FilmCardPresenter {
       this._mode = Mode.EDIT;
     });
 
-    this._detailPopupComponent.closeButtonClickHandler(() => {
+    this._detailPopupComponent.closeButtonClickHandler((evt) => {
+      evt.preventDefault();
       this._closeCard();
     });
+
+    if (oldFilmCardComponent && oldDetailPopupComponent) {
+      replace(this._filmCardComponent, oldFilmCardComponent);
+      if (siteBody.contains(oldDetailPopupComponent.getElement())) {
+        replace(this._detailPopupComponent, oldDetailPopupComponent);
+      }
+    } else {
+      render(this._container, this._filmCardComponent, RenderPosition.BEFOREEND);
+    }
   }
 
   setDefaultView() {
@@ -84,9 +85,8 @@ export default class FilmCardPresenter {
   }
 
   _closeCard() {
-    siteBody.removeChild(this._detailPopupComponent);
+    siteBody.removeChild(this._detailPopupComponent.getElement());
     document.removeEventListener(`keydown`, this._onEscKeyDown);
-    this._detailPopupComponent.reset();
     this._mode = Mode.DEFAULT;
   }
 
