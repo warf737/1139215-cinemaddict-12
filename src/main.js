@@ -1,12 +1,16 @@
-import MovieListPresenter from "./presenter/board";
+import BoardPresenter from "./presenter/board";
 import UserAvatarView from "./view/avatar";
 import MainNavigationView from "./view/main-navigation";
 import FilmsList from "./view/films-list";
 import {generateFilmCards} from "./mock/film-card";
 import {render, RenderPosition} from "./utils/render";
+import FilmCardModel from "./models/card";
 
 const FILMS_COUNT = 22;
 const films = generateFilmCards(FILMS_COUNT);
+
+const filmCardModel = new FilmCardModel();
+filmCardModel.setFilms(films);
 
 // header
 const siteHeaderElement = document.querySelector(`.header`);
@@ -20,5 +24,5 @@ render(siteMainElement, new MainNavigationView(films), RenderPosition.BEFOREEND)
 const filmsList = new FilmsList();
 render(siteMainElement, filmsList, RenderPosition.BEFOREEND);
 
-const movieList = new MovieListPresenter(filmsList);
-movieList.render(films);
+const boardPresenter = new BoardPresenter(filmsList, filmCardModel);
+boardPresenter.render(films);

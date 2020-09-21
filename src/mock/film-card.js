@@ -97,6 +97,7 @@ const generateFilmCard = () => {
   }];
 
   return {
+    id: String(new Date() + Math.random),
     title: titles[getRandomInteger(0, titles.length - 1)],
     age: ages[getRandomInteger(0, ages.length - 1)],
     director: directors[getRandomInteger(0, directors.length - 1)],

@@ -37,12 +37,12 @@ const getSortedFilmCards = (films, sort, from, to) => {
   return sortedFilms.slice(from, to);
 };
 
-export default class MovieListPresenter {
+export default class BoardPresenter {
 
-  constructor(container) {
+  constructor(container, filmCardModel) {
     this._container = container.getElement();
+    this._filmCardModel = filmCardModel;
 
-    this._films = [];
     this._showedFilmCards = [];
     this._displayingCardsCount = CARDS_COUNT;
     this._noFilmCards = new NoFilmCardsView();
@@ -56,20 +56,19 @@ export default class MovieListPresenter {
 
     this._filmsListElement = this._container.querySelector(`.films-list`);
     this._filmsListContainer = this._filmsListElement.querySelector(`.films-list__container`);
+
+    this._films = this._filmCardModel.getFilms();
   }
 
-  render(films) {
-    this._films = films;
-
-    if (films.length < 1 || !films) {
+  render() {
+    if (this._filmCardModel.length === 0) {
       render(this._filmsListElement, new this._noFilmCards(), RenderPosition.BEFOREEND);
       return;
     }
 
     render(this._container, this._sortComponent, RenderPosition.AFTERBEGIN);
 
-    const newFilmCards = renderFilmCards(this._filmsListContainer, this._films.slice(0, this._displayingCardsCount), this._onDataChange, this._onViewChange);
-    this._showedFilmCards = this._showedFilmCards.concat(newFilmCards);
+    this._renderFilmsCards(this._films.slice(0, this._displayingCardsCount));
     this._renderLoadMoreButton();
 
     // extra films
@@ -78,11 +77,20 @@ export default class MovieListPresenter {
     additionalFilmsElement.forEach((element) => {
       let elementContainer = element.querySelector(`.films-list__container`);
       for (let i = 0; i < ADDITIONAL_CARDS_COUNT; i++) {
-        render(elementContainer, new FilmCardView(films[getRandomInteger(0, films.length - 1)]), RenderPosition.BEFOREEND);
+        render(elementContainer, new FilmCardView(this._films[getRandomInteger(0, this._films.length - 1)]), RenderPosition.BEFOREEND);
       }
     });
   }
+
+  _renderFilmsCards(films) {
+    const newFilmCards = renderFilmCards(this._filmsListContainer, films, this._onDataChange, this._onViewChange);
+    this._showedFilmCards = this._showedFilmCards.concat(newFilmCards);
+
+    this._displayingCardsCount = this._showedFilmCards.length;
+  }
+
   _renderLoadMoreButton() {
+    remove(this._loadMoreButton);
     if (this._displayingCardsCount >= this._films.length) {
       return;
     }
@@ -98,35 +106,28 @@ export default class MovieListPresenter {
       const sortedFilms = getSortedFilmCards(this._films, this._sortComponent.getSortType(), prevCards, this._displayingCardsCount);
       const newFilmCards = renderFilmCards(this._filmsListContainer, sortedFilms, this._onDataChange, this._onViewChange);
       this._showedFilmCards = this._showedFilmCards.concat(newFilmCards);
-
-      if (this._displayingCardsCount >= this._films.length) {
-        remove(this._loadMoreButton);
-      }
     });
   }
+
   _onSortTypeChange(sort) {
     this._displayingCardsCount = CARDS_COUNT;
     const sortedFilms = getSortedFilmCards(this._films, sort, 0, this._displayingCardsCount);
 
     this._filmsListContainer.innerHTML = ``;
 
-    const newFilmCards = renderFilmCards(this._filmsListContainer, sortedFilms, this._onDataChange, this._onViewChange);
-    this._showedFilmCards = newFilmCards;
-    remove(this._loadMoreButton);
+    this._showedFilmCards = renderFilmCards(this._filmsListContainer, sortedFilms, this._onDataChange, this._onViewChange);
     this._renderLoadMoreButton();
 
   }
-  _onDataChange(filmCardController, oldData, newData) {
-    const index = this._films.findIndex((it) => it === oldData);
 
-    if (index === -1) {
-      return;
+  _onDataChange(filmCardPresenter, oldData, newData) {
+    const isSuccess = this._filmCardModel.updateFilm(oldData.id, newData);
+
+    if (isSuccess) {
+      filmCardPresenter.render(newData);
     }
-
-    this._films = [].concat(this._films.slice(0, index), newData, this._films.slice(index));
-
-    filmCardController.render(this._films[index]);
   }
+
   _onViewChange() {
     this._showedFilmCards.forEach((film) => film.setDefaultView());
   }
