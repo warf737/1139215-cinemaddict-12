@@ -187,7 +187,6 @@ export default class DetailPopup extends AbstractSmartComponent {
 
   recoveryListeners() {
     this.closeButtonClickHandler(this._clickHandler);
-    this._subscribeToEvents();
     this.setWatchlistButtonClickHandler(this._watchListHandler);
     this.setHistoryButtonClickHandler(this._historyHandler);
     this.setFavoritesButtonClickHandler(this._favoritesHandler);
@@ -218,17 +217,20 @@ export default class DetailPopup extends AbstractSmartComponent {
   }
 
   setWatchlistButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-input--watchlist`)
-      .addEventListener(`change`, handler);
+    this.getElement().querySelector(`input#watchlist`)
+      .addEventListener(`click`, handler);
+    this._watchListHandler = handler;
   }
 
   setHistoryButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-input--watched`)
-      .addEventListener(`change`, handler);
+    this.getElement().querySelector(`input#watched`)
+      .addEventListener(`click`, handler);
+    this._historyHandler = handler;
   }
 
   setFavoritesButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-input--favorite`)
-      .addEventListener(`change`, handler);
+    this.getElement().querySelector(`input#favorite`)
+      .addEventListener(`click`, handler);
+    this._favoritesHandler = handler;
   }
 }

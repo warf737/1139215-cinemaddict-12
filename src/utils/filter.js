@@ -5,15 +5,18 @@ export const capitalizeFirstLetter = (string) => {
 };
 
 export const getWatchlistFilms = (films) => {
-  return films.filter((film) => film.isWatchlist);
+  let newFilms = films.filter((film) => film.isWatchlist);
+  return newFilms;
 };
 
 export const getHistoryFilms = (films) => {
-  return films.filter((film) => film.isHistory);
+  let newFilms = films.filter((film) => film.isHistory);
+  return newFilms;
 };
 
 export const getFavoriteFilms = (films) => {
-  return films.filter((film) => film.isFavorite);
+  let newFilms = films.filter((film) => film.isFavorite);
+  return newFilms;
 };
 
 export const getFilmsByFilter = (films, filterType) => {

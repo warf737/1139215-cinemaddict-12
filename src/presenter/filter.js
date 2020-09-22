@@ -1,4 +1,4 @@
-import MainNavigation from "../view/main-navigation";
+import MainNavigation from "../view/filter";
 import {FilterType} from "../const";
 import {render, replace, RenderPosition} from "../utils/render";
 import {getFilmsByFilter} from "../utils/filter.js";

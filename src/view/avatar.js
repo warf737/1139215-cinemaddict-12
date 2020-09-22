@@ -1,15 +1,34 @@
 import Abstract from "./abstract";
+import {getHistoryFilms} from "../utils/filter";
 
-const createUserAvatarTemplate = () =>
-  `<section class="header__profile profile">
-   <p class="profile__rating">Movie Buff</p>
-   <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
- </section>`;
+const getUsername = (films) => {
+  const count = getHistoryFilms(films).length;
+  switch (true) {
+    case count >= 1 && count <= 10:
+      return `Novice`;
+    case count >= 11 && count <= 20:
+      return `Fan`;
+    case count > 21:
+      return `Movie Buff`;
+  }
+  return ``;
+};
+
+const createUserAvatarTemplate = (films) => {
+  return (
+    `<p class="profile__rating">${getUsername(films)}</p>`
+  );
+};
 
 export default class UserAvatar extends Abstract {
+  constructor(films) {
+    super();
+
+    this._films = films;
+  }
 
   getTemplate() {
-    return createUserAvatarTemplate();
+    return createUserAvatarTemplate(this._films);
   }
 
 }

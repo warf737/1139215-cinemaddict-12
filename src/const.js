@@ -1,14 +1,23 @@
 const FilterType = {
   ALL: `All`,
   WATCHLIST: `Watchlist`,
-  HiSTORY: `History`,
+  HISTORY: `History`,
   FAVORITES: `Favorites`
 };
-const cardFilters = [`isWatchlist`, `isHistory`, `isFavorite`];
-const emojies = [`smile`, `sleeping`, `puke`, `angry`];
+
+const EmojiName = {
+  SMILE: `smile`,
+  SLEEPING: `sleeping`,
+  PUKE: `puke`,
+  ANGRY: `angry`,
+};
+
+const emojies = Object.values(EmojiName);
+
+
 const sortType = {
   DEFAULT: `default`,
   DATE_UP: `date-up`,
   RATING_DOWN: `rating-down`,
 };
-export {FilterType, cardFilters, emojies, sortType};
+export {FilterType, emojies, sortType};
