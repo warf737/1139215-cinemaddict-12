@@ -1,17 +1,31 @@
+import {getFilmsByFilter} from "../utils/filter";
+import {FilterType} from "../const";
+
 export default class FilmCards {
   constructor() {
     this._films = [];
+    this._activeFilterType = FilterType.ALL;
 
     this._handlerDataChange = [];
+    this._handlerFilterChange = [];
   }
 
   getFilms() {
+    return getFilmsByFilter(this._films, this._activeFilterType);
+  }
+
+  getFilmsAll() {
     return this._films;
   }
 
   setFilms(films) {
     this._films = Array.from(films);
     this._callHandlers(this._handlerDataChange);
+  }
+
+  setFilter(filterType) {
+    this._activeFilterType = filterType;
+    this._callHandlers(this._handlerFilterChange);
   }
 
   updateFilm(id, film) {
@@ -28,6 +42,10 @@ export default class FilmCards {
 
   setHandlerDataChange(handler) {
     this._handlerDataChange.push(handler);
+  }
+
+  setFilterChangeHandler(handler) {
+    this._handlerFilterChange.push(handler);
   }
 
   _callHandlers(handlers) {

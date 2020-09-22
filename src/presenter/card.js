@@ -1,6 +1,6 @@
 import FilmCardView from "../view/card";
 import DetailPopupView from "../view/popup";
-import {replace, render, RenderPosition} from "../utils/render";
+import {replace, render, remove, RenderPosition} from "../utils/render";
 
 const siteBody = document.querySelector(`body`);
 
@@ -82,6 +82,12 @@ export default class FilmCardPresenter {
     if (this._mode !== Mode.DEFAULT) {
       this._closeCard();
     }
+  }
+
+  destroy() {
+    remove(this._detailPopupComponent);
+    remove(this._filmCardComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
   _closeCard() {

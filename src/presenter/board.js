@@ -41,7 +41,7 @@ export default class BoardPresenter {
 
   constructor(container, filmCardModel) {
     this._container = container.getElement();
-    this._filmCardModel = filmCardModel;
+    this._filmsCardsModel = filmCardModel;
 
     this._showedFilmCards = [];
     this._displayingCardsCount = CARDS_COUNT;
@@ -52,16 +52,19 @@ export default class BoardPresenter {
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
+    this._onFilterChange = this._onFilterChange.bind(this);
+
     this._sortComponent.changeSortTypeHandler(this._onSortTypeChange);
+    this._filmsCardsModel.setFilterChangeHandler(this._onFilterChange);
 
     this._filmsListElement = this._container.querySelector(`.films-list`);
     this._filmsListContainer = this._filmsListElement.querySelector(`.films-list__container`);
 
-    this._films = this._filmCardModel.getFilms();
+    this._films = this._filmsCardsModel.getFilms();
   }
 
   render() {
-    if (this._filmCardModel.length === 0) {
+    if (this._filmsCardsModel.length === 0) {
       render(this._filmsListElement, new this._noFilmCards(), RenderPosition.BEFOREEND);
       return;
     }
@@ -121,7 +124,7 @@ export default class BoardPresenter {
   }
 
   _onDataChange(filmCardPresenter, oldData, newData) {
-    const isSuccess = this._filmCardModel.updateFilm(oldData.id, newData);
+    const isSuccess = this._filmsCardsModel.updateFilm(oldData.id, newData);
 
     if (isSuccess) {
       filmCardPresenter.render(newData);
@@ -130,5 +133,20 @@ export default class BoardPresenter {
 
   _onViewChange() {
     this._showedFilmCards.forEach((film) => film.setDefaultView());
+  }
+
+  _removeFilmCards() {
+    this._showedFilmCards.forEach((presenter) => presenter.destroy());
+    this._showedFilmCards = [];
+  }
+
+  _updateCards(count) {
+    this._removeFilmCards();
+    this._renderFilmsCards(this._films.slice(0, count));
+    this._renderLoadMoreButton();
+  }
+
+  _onFilterChange() {
+    this._updateCards(CARDS_COUNT);
   }
 }

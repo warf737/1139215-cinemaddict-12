@@ -1,4 +1,9 @@
-const filterNames = [`watchlist`, `history`, `favorites`];
+const FilterType = {
+  ALL: `All`,
+  WATCHLIST: `Watchlist`,
+  HiSTORY: `History`,
+  FAVORITES: `Favorites`
+};
 const cardFilters = [`isWatchlist`, `isHistory`, `isFavorite`];
 const emojies = [`smile`, `sleeping`, `puke`, `angry`];
 const sortType = {
@@ -6,4 +11,4 @@ const sortType = {
   DATE_UP: `date-up`,
   RATING_DOWN: `rating-down`,
 };
-export {filterNames, cardFilters, emojies, sortType};
+export {FilterType, cardFilters, emojies, sortType};
