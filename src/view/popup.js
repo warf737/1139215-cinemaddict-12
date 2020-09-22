@@ -1,34 +1,11 @@
 import AbstractSmartComponent from "./abstract-smart";
-import {emojies} from "../const";
-import {formatTime, formatPopupDate, formatCommentDate} from "../utils/moment";
+import {formatTime, formatPopupDate} from "../utils/moment";
 
 const createGenresMarkup = (genres) => {
   return genres
     .map((genre) => {
       return (
         `<span class="film-details__genre">${genre}</span>`
-      );
-    })
-    .join(`\n`);
-};
-
-const createCommentsMarkup = (comments) => {
-  return comments
-    .map((comment) => {
-      return (
-        `<li class="film-details__comment">
-          <span class="film-details__comment-emoji">
-            <img src="./images/emoji/${comment.emoji}.png" width="55" height="55" alt="emoji-${comment.emoji}">
-          </span>
-          <div>
-            <p class="film-details__comment-text">${comment.text}</p>
-            <p class="film-details__comment-info">
-              <span class="film-details__comment-author">${comment.author}</span>
-              <span class="film-details__comment-day">${formatCommentDate(comment.day)}</span>
-              <button class="film-details__comment-delete">Delete</button>
-            </p>
-          </div>
-        </li>`
       );
     })
     .join(`\n`);
@@ -79,11 +56,8 @@ const createButtonMarkup = (name, content, isChecked) => {
 };
 
 const createPopUpTemplate = (film) => {
-  const {poster, title, age, director, writers, actors, rating, date, duration, country, genres, description, comments} = film;
-  const commentsMarkup = createCommentsMarkup(comments);
+  const {poster, title, age, director, writers, actors, rating, date, duration, country, genres, description} = film;
   const genresMarkup = createGenresMarkup(genres);
-  const emojiListMarkup = createEmojiListMarkup(emojies);
-  const commentsWrapMarkup = createCommentsWrapMarkup(comments, commentsMarkup, emojiListMarkup);
   const genreTerm = genres.length > 1 ? `Genres` : `Genre`;
 
   const watchlistButton = createButtonMarkup(`watchlist`, `Add-to-watchlist`, film.isWatchlist);
@@ -162,7 +136,6 @@ const createPopUpTemplate = (film) => {
       </div>
 
       <div class="form-details__bottom-container">
-        ${commentsWrapMarkup}
       </div>
     </form>
   </section>`
@@ -178,11 +151,25 @@ export default class DetailPopup extends AbstractSmartComponent {
     this._historyHandler = null;
     this._favoritesHandler = null;
 
-    this._subscribeToEvents();
+    // this._subscribeToEvents();
   }
 
   getTemplate() {
     return createPopUpTemplate(this._film);
+  }
+
+  getFilm() {
+    return this._film;
+  }
+
+  getData() {
+    const form = this.getElement().querySelector(`film-details__inner`);
+    const formData = new FormData(form);
+
+    return {
+      emoji: formData.get(`comment-emoji`),
+      text: formData.get(`comment`)
+    };
   }
 
   recoveryListeners() {
@@ -192,28 +179,11 @@ export default class DetailPopup extends AbstractSmartComponent {
     this.setFavoritesButtonClickHandler(this._favoritesHandler);
   }
 
-  rerender() {
-    super.rerender();
-  }
-
   closeButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
 
     this._clickHandler = handler;
-  }
-
-  _subscribeToEvents() {
-    const element = this.getElement();
-    const emojiElement = element.querySelector(`.film-details__add-emoji-label`);
-
-    element.querySelectorAll(`.film-details__emoji-label`)
-      .forEach((el) => {
-        el.addEventListener(`click`, () => {
-          const link = el.querySelector(`img`).src;
-          emojiElement.innerHTML = `<img src=${link} width="55" height="55" alt="emoji">`;
-        });
-      });
   }
 
   setWatchlistButtonClickHandler(handler) {
@@ -232,5 +202,9 @@ export default class DetailPopup extends AbstractSmartComponent {
     this.getElement().querySelector(`input#favorite`)
       .addEventListener(`click`, handler);
     this._favoritesHandler = handler;
+  }
+
+  getCommentsElement() {
+    return this.getElement().querySelector(`.form-details__bottom-container`);
   }
 }

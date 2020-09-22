@@ -1,6 +1,7 @@
 import FilmCardView from "../view/card";
 import DetailPopupView from "../view/popup";
 import {replace, render, remove, RenderPosition} from "../utils/render";
+import CommentsPresenter from "./comment";
 
 const siteBody = document.querySelector(`body`);
 
@@ -10,11 +11,12 @@ const Mode = {
 };
 
 export default class FilmCardPresenter {
-  constructor(container, onDataChange, onViewChange) {
+  constructor(container, commentsModel, onDataChange, onViewChange) {
     this._container = container;
     this._filmCardComponent = null;
     this._onDataChange = onDataChange;
     this._onViewChange = onViewChange;
+    this._commentsModel = commentsModel;
     this._mode = Mode.DEFAULT;
 
     this._filmCardComponent = null;
@@ -33,6 +35,7 @@ export default class FilmCardPresenter {
 
       this._onViewChange();
       siteBody.appendChild(this._detailPopupComponent.getElement());
+      this._renderComments();
       document.addEventListener(`keydown`, this._onEscKeyDown);
       this._mode = Mode.EDIT;
       const popup = document.querySelector(`.film-details`);
@@ -97,9 +100,16 @@ export default class FilmCardPresenter {
     if (oldDetailPopupComponent) {
       replace(this._filmCardComponent, oldFilmCardComponent);
       replace(this._detailPopupComponent, oldDetailPopupComponent);
+      if (this._mode === Mode.EDIT) {
+        this._renderComments();
+      }
       document.addEventListener(`keydown`, this._onEscKeyDown);
     }
     render(this._container, this._filmCardComponent, RenderPosition.BEFOREEND);
+  }
+
+  _renderComments() {
+    new CommentsPresenter(this._detailPopupComponent, this._commentsModel, this._onDataChange).render();
   }
 
   setDefaultView() {

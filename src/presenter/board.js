@@ -9,9 +9,9 @@ import UserAvatar from "../view/avatar";
 const CARDS_COUNT = 5;
 const ADDITIONAL_CARDS_COUNT = 2;
 
-const renderFilmCards = (filmElement, films, onDataChange, onViewChange) => {
+const renderFilmCards = (filmElement, films, comments, onDataChange, onViewChange) => {
   return films.map((film) => {
-    const cardPresenter = new CardPresenter(filmElement, onDataChange, onViewChange);
+    const cardPresenter = new CardPresenter(filmElement, comments, onDataChange, onViewChange);
     cardPresenter.render(film);
     return cardPresenter;
   });
@@ -38,9 +38,10 @@ const getSortedFilmCards = (films, sort, from, to) => {
 
 export default class BoardPresenter {
 
-  constructor(container, filmCardModel) {
+  constructor(container, models) {
     this._container = container.getElement();
-    this._filmsCardsModel = filmCardModel;
+    this._filmsCardsModel = models.filmsCardsModel;
+    this._commentsModel = models.commentsModel;
 
     this._showedFilmCards = [];
     this._displayingCardsCount = CARDS_COUNT;
@@ -84,18 +85,18 @@ export default class BoardPresenter {
     const additionalFilmsElement = this._container.querySelectorAll(`.films-list--extra .films-list__container`);
 
     const topRatedFilms = this._films.slice(0).sort((a, b) => b.rating - a.rating).slice(0, ADDITIONAL_CARDS_COUNT);
-    const mostCommentedFilms = this._films.slice(0).sort((a, b) => b.comments.length - a.comments.length).slice(0, ADDITIONAL_CARDS_COUNT);
+    const mostCommentedFilms = this._films.slice(0).sort((a, b) => b.commentsCount - a.commentsCount).slice(0, ADDITIONAL_CARDS_COUNT);
 
-    const topRatedFilmCards = renderFilmCards(additionalFilmsElement[0], topRatedFilms, this._onDataChange, this._onViewChange);
+    const topRatedFilmCards = renderFilmCards(additionalFilmsElement[0], topRatedFilms, this._commentsModel, this._onDataChange, this._onViewChange);
     this._showedFilmCards = this._showedFilmCards.concat(topRatedFilmCards);
 
-    const mostCommentedFilmCards = renderFilmCards(additionalFilmsElement[1], mostCommentedFilms, this._onDataChange, this._onViewChange);
+    const mostCommentedFilmCards = renderFilmCards(additionalFilmsElement[1], mostCommentedFilms, this._commentsModel, this._onDataChange, this._onViewChange);
     this._showedFilmCards = this._showedFilmCards.concat(mostCommentedFilmCards);
 
   }
 
   _renderFilmsCards(films) {
-    const newFilmCards = renderFilmCards(this._filmsListContainer, films, this._onDataChange, this._onViewChange);
+    const newFilmCards = renderFilmCards(this._filmsListContainer, films, this._commentsModel, this._onDataChange, this._onViewChange);
     this._showedFilmCards = this._showedFilmCards.concat(newFilmCards);
   }
 
