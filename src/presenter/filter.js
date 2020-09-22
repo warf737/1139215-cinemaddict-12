@@ -1,6 +1,6 @@
 import MainNavigation from "../view/filter";
 import {FilterType} from "../const";
-import {render, replace, RenderPosition} from "../utils/render";
+import {render, replace} from "../utils/render";
 import {getFilmsByFilter} from "../utils/filter.js";
 
 export default class FilterPresenter {
@@ -35,7 +35,7 @@ export default class FilterPresenter {
     if (oldNavigation) {
       replace(this._filterView, oldNavigation);
     } else {
-      render(container, this._filterView, RenderPosition.BEFOREEND);
+      render(container, this._filterView);
     }
   }
 

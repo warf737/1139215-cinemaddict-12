@@ -1,5 +1,6 @@
 import AbstractSmartComponent from "./abstract-smart";
 import {formatTime, formatPopupDate} from "../utils/moment";
+import {encode} from "he";
 
 const createGenresMarkup = (genres) => {
   return genres
@@ -56,10 +57,11 @@ const createButtonMarkup = (name, content, isChecked) => {
 };
 
 const createPopUpTemplate = (film) => {
-  const {poster, title, age, director, writers, actors, rating, date, duration, country, genres, description} = film;
+  const {poster, title, age, director, writers, actors, rating, date, duration, country, genres, currentDescription} = film;
   const genresMarkup = createGenresMarkup(genres);
   const genreTerm = genres.length > 1 ? `Genres` : `Genre`;
 
+  const description = encode(currentDescription);
   const watchlistButton = createButtonMarkup(`watchlist`, `Add-to-watchlist`, film.isWatchlist);
   const historyButton = createButtonMarkup(`watched`, `Already watched`, film.isHistory);
   const favoritesButton = createButtonMarkup(`favorite`, `Add to favorites`, film.isFavorite);
@@ -151,14 +153,13 @@ export default class DetailPopup extends AbstractSmartComponent {
     this._historyHandler = null;
     this._favoritesHandler = null;
 
-    // this._subscribeToEvents();
   }
 
   getTemplate() {
     return createPopUpTemplate(this._film);
   }
 
-  getFilm() {
+  get film() {
     return this._film;
   }
 

@@ -1,7 +1,6 @@
 import {render} from "../utils/render.js";
 import Comments from "../view/comments-list";
 import CommentPresenter from "../presenter/comment";
-import {RenderPosition} from "../utils/render";
 
 export default class CommentsPresenter {
   constructor(container, commentsModel, onDataChange) {
@@ -23,13 +22,13 @@ export default class CommentsPresenter {
         this._onCommentDataChange(null, this._container.getData());
       }
     });
-    render(this._container.getCommentsElement(), this._commentsComponent, RenderPosition.BEFOREEND);
+    render(this._container.getCommentsElement(), this._commentsComponent);
     this._renderComments();
   }
 
   _renderComments() {
     const film = this._container.film;
-    this._commentController = this._commentsModel.getComments(film).forEach((comment) => {
+    this._commentsModel.getComments(film).map((comment) => {
       new CommentPresenter(this._commentsComponent, this._onCommentDataChange).render(comment);
     });
   }

@@ -1,6 +1,6 @@
 import FilmCardView from "../view/card";
 import DetailPopupView from "../view/popup";
-import {replace, render, remove, RenderPosition} from "../utils/render";
+import {replace, render, remove} from "../utils/render";
 import CommentsPresenter from "./comment";
 
 const siteBody = document.querySelector(`body`);
@@ -36,12 +36,12 @@ export default class FilmCardPresenter {
       this._onViewChange();
       siteBody.appendChild(this._detailPopupComponent.getElement());
       this._renderComments();
-      document.addEventListener(`keydown`, this._onEscKeyDown);
-      this._mode = Mode.EDIT;
       const popup = document.querySelector(`.film-details`);
       if (popup.length > 1) {
         siteBody.removeChild(popup[0]);
       }
+      document.addEventListener(`keydown`, this._onEscKeyDown);
+      this._mode = Mode.EDIT;
     });
 
     this._filmCardComponent.setWatchlistButtonClickHandler(() => {
@@ -105,11 +105,11 @@ export default class FilmCardPresenter {
       }
       document.addEventListener(`keydown`, this._onEscKeyDown);
     }
-    render(this._container, this._filmCardComponent, RenderPosition.BEFOREEND);
+    render(this._container, this._filmCardComponent);
   }
 
   _renderComments() {
-    new CommentsPresenter(this._detailPopupComponent, this._commentsModel, this._onDataChange).render();
+    new CommentsPresenter(this._detailPopupComponent, this._commentsModel, this._onDataChange.bind(this, this)).render();
   }
 
   setDefaultView() {

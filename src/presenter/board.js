@@ -68,11 +68,11 @@ export default class BoardPresenter {
 
   render() {
     if (this._filmsCardsModel.length === 0) {
-      render(this._filmsListElement, new this._noFilmCards(), RenderPosition.BEFOREEND);
+      render(this._filmsListElement, new this._noFilmCards());
       return;
     }
 
-    render(this._header, this._avatarComponent, RenderPosition.BEFOREEND);
+    render(this._header, this._avatarComponent);
     render(this._container, this._sortComponent, RenderPosition.AFTERBEGIN);
 
     this._renderFilmsCards(this._films.slice(0, this._displayingCardsCount));
@@ -111,7 +111,7 @@ export default class BoardPresenter {
       return;
     }
 
-    render(this._filmsListElement, this._loadMoreButton, RenderPosition.BEFOREEND);
+    render(this._filmsListElement, this._loadMoreButton);
     // показ карточек фильма по нажатию на кнопку показать больше
     this._loadMoreButton.setClickHandler(this._onLoadMoreButtonClick);
   }
@@ -137,7 +137,7 @@ export default class BoardPresenter {
       }
       remove(this._avatarComponent);
       this._avatarComponent = new UserAvatar(this._filmsCardsModel.getFilmsAll());
-      render(this._header, this._avatarComponent, RenderPosition.BEFOREEND);
+      render(this._header, this._avatarComponent);
     }
   }
 

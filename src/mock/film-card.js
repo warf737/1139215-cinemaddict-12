@@ -73,9 +73,21 @@ const generateFilmCard = () => {
   const startDate = new Date(1920, 3, 5).getTime();
   const finalDate = new Date(2020, 3, 27).getTime();
   const duration = {min: 45, max: 140};
+  const getId = () => {
+    return Number(Date.now()) + Math.random();
+  };
+  const comments = generateComments(getRandomInteger(0,3).map((comment) => {
+    Object.assign(
+        {},
+        comment,
+        {
+          id: getId()
+        }
+    );
+  }));
 
   return {
-    id: Number(Date.now()) + Math.random(),
+    id: getId(),
     title: titles[getRandomInteger(0, titles.length - 1)],
     age: ages[getRandomInteger(0, ages.length - 1)],
     director: directors[getRandomInteger(0, directors.length - 1)],
@@ -85,9 +97,9 @@ const generateFilmCard = () => {
     date: new Date(getRandomInteger(startDate, finalDate)),
     genres: getNewArray(genres),
     poster: posters[getRandomInteger(0, posters.length - 1)],
-    description: getNewArray(descriptions, getRandomInteger(0, descriptions.length - 1)).join(` `),
+    currentDescription: getNewArray(descriptions, getRandomInteger(0, descriptions.length - 1)).join(` `),
     country: countries[getRandomInteger(0, countries.length - 1)],
-    comments: generateComments(getRandomInteger(0, 3)),
+    comments,
     isFavorite: Math.random() > 0.5,
     isHistory: Math.random() > 0.5,
     isWatchlist: Math.random() > 0.5,
