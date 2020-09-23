@@ -127,7 +127,7 @@ export default class DetailPopup extends AbstractSmartComponent {
   }
 
   getData() {
-    const form = this.getElement().querySelector(`film-details__inner`);
+    const form = this.getElement().querySelector(`.film-details__inner`);
     const formData = new FormData(form);
 
     return {
