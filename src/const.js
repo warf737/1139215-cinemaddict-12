@@ -15,9 +15,25 @@ const EmojiName = {
 const emojies = Object.values(EmojiName);
 
 
-const sortType = {
+const SortType = {
   DEFAULT: `default`,
   DATE_UP: `date-up`,
   RATING_DOWN: `rating-down`,
 };
-export {FilterType, emojies, sortType};
+
+const NavigationItem = {
+  FILTER: `filter`,
+  STATISTIC: `statistic`,
+};
+
+const StatisticFilterType = {
+  ALL_TIME: `all-time`,
+  TODAY: `today`,
+  WEEK: `week`,
+  MONTH: `month`,
+  YEAR: `year`
+};
+
+const StatisticFilterTypes = Object.values(StatisticFilterType);
+
+export {FilterType, emojies, SortType, NavigationItem, StatisticFilterType, StatisticFilterTypes};

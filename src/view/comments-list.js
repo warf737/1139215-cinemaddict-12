@@ -1,5 +1,5 @@
 import {emojies} from "../const";
-import AbstractSmartComponent from "./abstract-smart";
+import Abstract from "./abstract";
 
 const createEmojiListMarkup = (names) => {
   return names
@@ -38,7 +38,7 @@ const createFilmDetailsTemplate = (film) => {
   );
 };
 
-export default class FilmDetails extends AbstractSmartComponent {
+export default class FilmDetails extends Abstract {
   constructor(film) {
     super();
 

@@ -1,17 +1,17 @@
 import Abstract from "./abstract";
-import {sortType} from "../const";
+import {SortType} from "../const";
 
 const createSortTemplate = () =>
   `<ul class="sort">
-    <li><a href="#" class="sort__button sort__button--active" data-sort-type="${sortType.DEFAULT}">Sort by default</a></li>
-    <li><a href="#" class="sort__button" data-sort-type="${sortType.DATE_UP}">Sort by date</a></li>
-    <li><a href="#" class="sort__button" data-sort-type="${sortType.RATING_DOWN}">Sort by rating</a></li>
+    <li><a href="#" class="sort__button sort__button--active" data-sort-type="${SortType.DEFAULT}">Sort by default</a></li>
+    <li><a href="#" class="sort__button" data-sort-type="${SortType.DATE_UP}">Sort by date</a></li>
+    <li><a href="#" class="sort__button" data-sort-type="${SortType.RATING_DOWN}">Sort by rating</a></li>
   </ul>`;
 
 export default class Sort extends Abstract {
   constructor() {
     super();
-    this._currentSortType = sortType.DEFAULT;
+    this._currentSortType = SortType.DEFAULT;
   }
 
   getTemplate() {

@@ -1,6 +1,6 @@
-import Abstract from "./abstract";
 import {formatTime, formatDate} from "../utils/moment";
 import {encode} from "he";
+import Abstract from "./abstract-smart";
 
 
 const createButtonMarkup = (name, isActive) => {

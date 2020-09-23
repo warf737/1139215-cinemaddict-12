@@ -1,4 +1,4 @@
-import AbstractSmartComponent from "./abstract-smart";
+import Abstract from "./abstract";
 import {formatTime, formatPopupDate} from "../utils/moment";
 import {encode} from "he";
 
@@ -107,7 +107,7 @@ const createPopUpTemplate = (film) => {
   );
 };
 
-export default class DetailPopup extends AbstractSmartComponent {
+export default class DetailPopup extends Abstract {
   constructor(film) {
     super();
     this._film = film;

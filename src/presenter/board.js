@@ -2,7 +2,7 @@ import {remove, render, RenderPosition} from "../utils/render";
 import NoFilmCardsView from "../view/no-film-cards";
 import LoadMoreButtonView from "../view/load-more-button";
 import SortView from "../view/sort";
-import {sortType} from "../const";
+import {SortType} from "../const";
 import CardPresenter from "./card";
 import UserAvatar from "../view/avatar";
 
@@ -22,13 +22,13 @@ const getSortedFilmCards = (films, sort, from, to) => {
   const showingFilms = films.slice();
 
   switch (sort) {
-    case sortType.DEFAULT:
+    case SortType.DEFAULT:
       sortedFilms = showingFilms;
       break;
-    case sortType.DATE_UP:
+    case SortType.DATE_UP:
       sortedFilms = showingFilms.sort((a, b) => a.date - b.date);
       break;
-    case sortType.RATING_DOWN:
+    case SortType.RATING_DOWN:
       sortedFilms = showingFilms.sort((a, b) => b.rating - a.rating);
       break;
   }
@@ -62,6 +62,16 @@ export default class BoardPresenter {
     this._filmsListElement = this._container.querySelector(`.films-list`);
     this._filmsListContainer = this._filmsListElement.querySelector(`.films-list__container`);
     this._header = document.querySelector(`.profile`);
+  }
+
+  hide() {
+    this._container.hide();
+    this._sortComponent.hide();
+  }
+
+  show() {
+    this._container.show();
+    this._sortComponent.show();
   }
 
   render() {
@@ -173,6 +183,12 @@ export default class BoardPresenter {
 
     if (this._displayingCardsCount >= this._filmsCardsModel.getFilms().length) {
       remove(this._loadMoreButton);
+    }
+  }
+
+  resetSortType() {
+    if (this._sortComponent.getSortType(SortType.DEFAULT)) {
+      this._onSortTypeChange(SortType.DEFAULT);
     }
   }
 

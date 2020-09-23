@@ -71,12 +71,15 @@ const generateFilmCard = () => {
     `Australia`
   ];
   const startDate = new Date(1920, 3, 5).getTime();
+  const startSecondDate = new Date(2020, 4, 17).getTime();
   const finalDate = new Date(2020, 3, 27).getTime();
   const duration = {min: 45, max: 140};
   const getId = () => {
     return Number(Date.now()) + Math.random();
   };
   const comments = generateComments(getRandomInteger(0, 3)).map((comment) => Object.assign({}, comment, {id: getId()}));
+  const date = new Date(getRandomInteger(startSecondDate, finalDate));
+  const isHistory = Math.random() > 0.5;
 
   return {
     id: getId(),
@@ -93,9 +96,10 @@ const generateFilmCard = () => {
     country: countries[getRandomInteger(0, countries.length - 1)],
     comments,
     isFavorite: Math.random() > 0.5,
-    isHistory: Math.random() > 0.5,
+    isHistory,
     isWatchlist: Math.random() > 0.5,
     duration: getRandomInteger(duration.min, duration.max),
+    watchingDate: isHistory ? date : null,
   };
 };
 

@@ -69,7 +69,8 @@ export default class FilmCardPresenter {
           {},
           film,
           {
-            isHistory: !film.isHistory
+            isHistory: !film.isHistory,
+            watchingDate: new Date(),
           }
       ));
     });
@@ -99,7 +100,8 @@ export default class FilmCardPresenter {
           {},
           film,
           {
-            isHistory: !film.isHistory
+            isHistory: !film.isHistory,
+            watchingDate: new Date(),
           }
       ));
     });

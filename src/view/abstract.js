@@ -1,4 +1,5 @@
 import {createElement} from "../utils/render";
+const HIDDEN_CLASS = `visually-hidden`;
 
 export default class AbstractComponent {
   constructor() {
@@ -23,5 +24,17 @@ export default class AbstractComponent {
 
   removeElement() {
     this._element = null;
+  }
+
+  show() {
+    if (this._element) {
+      this._element.classLisr.remove(HIDDEN_CLASS);
+    }
+  }
+
+  hide() {
+    if (this._element) {
+      this._element.classLisr.add(HIDDEN_CLASS);
+    }
   }
 }
