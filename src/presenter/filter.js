@@ -1,4 +1,4 @@
-import MainNavigation from "../view/filter";
+import FilterComponent from "../view/filter";
 import {FilterType} from "../const";
 import {render, replace} from "../utils/render";
 import {getFilmsByFilter} from "../utils/filter.js";
@@ -29,7 +29,7 @@ export default class FilterPresenter {
     });
     const oldNavigation = this._filterView;
 
-    this._filterView = new MainNavigation(filters);
+    this._filterView = new FilterComponent(filters);
     this._filterView.setFilterChangeHandler(this._onFilterChange);
 
     if (oldNavigation) {

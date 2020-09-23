@@ -48,7 +48,9 @@ export default class FilmCardPresenter {
       this._onDataChange(this, film, Object.assign(
           {},
           film,
-          {isWatchlist: !film.isWatchlist}
+          {
+            isWatchlist: !film.isWatchlist
+          }
       ));
     });
 
@@ -56,7 +58,9 @@ export default class FilmCardPresenter {
       this._onDataChange(this, film, Object.assign(
           {},
           film,
-          {isFavorite: !film.isFavorite}
+          {
+            isFavorite: !film.isFavorite
+          }
       ));
     });
 
@@ -64,7 +68,9 @@ export default class FilmCardPresenter {
       this._onDataChange(this, film, Object.assign(
           {},
           film,
-          {isHistory: !film.isHistory}
+          {
+            isHistory: !film.isHistory
+          }
       ));
     });
 
@@ -72,7 +78,9 @@ export default class FilmCardPresenter {
       this._onDataChange(this, film, Object.assign(
           {},
           film,
-          {isWatchlist: !film.isWatchlist}
+          {
+            isWatchlist: !film.isWatchlist
+          }
       ));
     });
 
@@ -80,7 +88,9 @@ export default class FilmCardPresenter {
       this._onDataChange(this, film, Object.assign(
           {},
           film,
-          {isFavorite: !film.isFavorite}
+          {
+            isFavorite: !film.isFavorite
+          }
       ));
     });
 
@@ -88,7 +98,9 @@ export default class FilmCardPresenter {
       this._onDataChange(this, film, Object.assign(
           {},
           film,
-          {isHistory: !film.isHistory}
+          {
+            isHistory: !film.isHistory
+          }
       ));
     });
 
@@ -104,8 +116,9 @@ export default class FilmCardPresenter {
         this._renderComments();
       }
       document.addEventListener(`keydown`, this._onEscKeyDown);
+    } else {
+      render(this._container, this._filmCardComponent);
     }
-    render(this._container, this._filmCardComponent);
   }
 
   _renderComments() {

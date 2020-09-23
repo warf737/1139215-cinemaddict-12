@@ -62,8 +62,6 @@ export default class BoardPresenter {
     this._filmsListElement = this._container.querySelector(`.films-list`);
     this._filmsListContainer = this._filmsListElement.querySelector(`.films-list__container`);
     this._header = document.querySelector(`.profile`);
-
-    this._films = this._filmsCardsModel.getFilms();
   }
 
   render() {
@@ -75,7 +73,7 @@ export default class BoardPresenter {
     render(this._header, this._avatarComponent);
     render(this._container, this._sortComponent, RenderPosition.AFTERBEGIN);
 
-    this._renderFilmsCards(this._films.slice(0, this._displayingCardsCount));
+    this._renderFilmsCards(this._filmsCardsModel.getFilms().slice(0, this._displayingCardsCount));
     this._renderExtraFilms();
     this._renderLoadMoreButton();
   }
@@ -84,8 +82,8 @@ export default class BoardPresenter {
   _renderExtraFilms() {
     const additionalFilmsElement = this._container.querySelectorAll(`.films-list--extra .films-list__container`);
 
-    const topRatedFilms = this._films.slice(0).sort((a, b) => b.rating - a.rating).slice(0, ADDITIONAL_CARDS_COUNT);
-    const mostCommentedFilms = this._films.slice(0).sort((a, b) => b.commentsCount - a.commentsCount).slice(0, ADDITIONAL_CARDS_COUNT);
+    const topRatedFilms = this._filmsCardsModel.getFilms().slice(0).sort((a, b) => b.rating - a.rating).slice(0, ADDITIONAL_CARDS_COUNT);
+    const mostCommentedFilms = this._filmsCardsModel.getFilms().slice(0).sort((a, b) => b.commentsCount - a.commentsCount).slice(0, ADDITIONAL_CARDS_COUNT);
 
     const topRatedFilmCards = renderFilmCards(additionalFilmsElement[0], topRatedFilms, this._commentsModel, this._onDataChange, this._onViewChange);
     this._showedFilmCards = this._showedFilmCards.concat(topRatedFilmCards);
@@ -107,7 +105,7 @@ export default class BoardPresenter {
 
   _renderLoadMoreButton() {
     remove(this._loadMoreButton);
-    if (this._displayingCardsCount >= this._films.length) {
+    if (this._displayingCardsCount >= this._filmsCardsModel.getFilms().length) {
       return;
     }
 
@@ -118,7 +116,7 @@ export default class BoardPresenter {
 
   _onSortTypeChange(sort) {
     this._displayingCardsCount = CARDS_COUNT;
-    const sortedFilms = getSortedFilmCards(this._films, sort, 0, this._displayingCardsCount);
+    const sortedFilms = getSortedFilmCards(this._filmsCardsModel.getFilms(), sort, 0, this._displayingCardsCount);
 
     this._removeFilmCards();
     this._renderFilmsCards(sortedFilms);
@@ -152,7 +150,7 @@ export default class BoardPresenter {
 
   _onFilterChange() {
     this._removeFilmCards();
-    const sortedFilms = getSortedFilmCards(this._films, this._sortComponent.getSortType(), 0, CARDS_COUNT);
+    const sortedFilms = getSortedFilmCards(this._filmsCardsModel.getFilms(), this._sortComponent.getSortType(), 0, CARDS_COUNT);
     this._renderFilterFilms(sortedFilms);
     this._renderExtraFilms(this._filmsCardsModel.getFilmsAll());
     this._renderLoadMoreButton();
@@ -160,7 +158,7 @@ export default class BoardPresenter {
 
   _updateFilms(count) {
     this._removeFilmCards();
-    const sortedFilms = getSortedFilmCards(this._films, this._sortComponent.getSortType(), 0, count);
+    const sortedFilms = getSortedFilmCards(this._filmsCardsModel.getFilms(), this._sortComponent.getSortType(), 0, count);
     this._renderFilmsCards(sortedFilms);
     this._renderExtraFilms(this._filmsCardsModel.getFilmsAll());
     this._renderLoadMoreButton();
@@ -170,10 +168,10 @@ export default class BoardPresenter {
     const prevCards = this._displayingCardsCount;
     this._displayingCardsCount = this._displayingCardsCount + CARDS_COUNT;
 
-    const sortedFilms = getSortedFilmCards(this._films, this._sortComponent.getSortType(), prevCards, this._displayingCardsCount);
+    const sortedFilms = getSortedFilmCards(this._filmsCardsModel.getFilms(), this._sortComponent.getSortType(), prevCards, this._displayingCardsCount);
     this._renderFilmsCards(sortedFilms);
 
-    if (this._displayingCardsCount >= this._films.length) {
+    if (this._displayingCardsCount >= this._filmsCardsModel.getFilms().length) {
       remove(this._loadMoreButton);
     }
   }

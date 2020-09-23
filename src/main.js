@@ -3,7 +3,7 @@ import FilterPresenter from "./presenter/filter";
 import Board from "./view/board";
 import {generateFilmCards} from "./mock/film-card";
 import {render, RenderPosition} from "./utils/render";
-import FilmCardModel from "./models/filter";
+import FilmCardModel from "./models/cards";
 import Footer from "./view/footer";
 import CommentsModel from "./models/comments";
 
