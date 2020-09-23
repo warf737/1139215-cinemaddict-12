@@ -39,7 +39,7 @@ const getSortedFilmCards = (films, sort, from, to) => {
 export default class BoardPresenter {
 
   constructor(container, models) {
-    this._container = container.getElement();
+    this._container = container;
     this._filmsCardsModel = models.filmsCardsModel;
     this._commentsModel = models.commentsModel;
 
@@ -59,7 +59,7 @@ export default class BoardPresenter {
     this._sortComponent.changeSortTypeHandler(this._onSortTypeChange);
     this._filmsCardsModel.setFilterChangeHandler(this._onFilterChange);
 
-    this._filmsListElement = this._container.querySelector(`.films-list`);
+    this._filmsListElement = this._container.getElement().querySelector(`.films-list`);
     this._filmsListContainer = this._filmsListElement.querySelector(`.films-list__container`);
     this._header = document.querySelector(`.profile`);
   }
@@ -81,7 +81,7 @@ export default class BoardPresenter {
     }
 
     render(this._header, this._avatarComponent);
-    render(this._container, this._sortComponent, RenderPosition.AFTERBEGIN);
+    render(this._container.getElement(), this._sortComponent, RenderPosition.AFTERBEGIN);
 
     this._renderFilmsCards(this._filmsCardsModel.getFilms().slice(0, this._displayingCardsCount));
     this._renderExtraFilms();
@@ -90,7 +90,7 @@ export default class BoardPresenter {
 
 
   _renderExtraFilms() {
-    const additionalFilmsElement = this._container.querySelectorAll(`.films-list--extra .films-list__container`);
+    const additionalFilmsElement = this._container.getElement().querySelectorAll(`.films-list--extra .films-list__container`);
 
     const topRatedFilms = this._filmsCardsModel.getFilms().slice(0).sort((a, b) => b.rating - a.rating).slice(0, ADDITIONAL_CARDS_COUNT);
     const mostCommentedFilms = this._filmsCardsModel.getFilms().slice(0).sort((a, b) => b.commentsCount - a.commentsCount).slice(0, ADDITIONAL_CARDS_COUNT);

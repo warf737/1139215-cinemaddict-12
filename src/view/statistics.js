@@ -1,4 +1,4 @@
-import AbstractSmart from "./abstract";
+import AbstractSmart from "./abstract-smart";
 import {isSelectedType, getDuration} from "../utils/common";
 import {StatisticFilterType, StatisticFilterTypes} from "../const";
 import Chart from "chart.js";
@@ -31,7 +31,7 @@ const getWatchedStatistic = (films, filterType) => {
   }, 0);
 
   const genres = watchedFilms.reduce((fundedDuration, film) => {
-    film.genreNames.forEach((genre) => {
+    film.genres.forEach((genre) => {
       if (!fundedDuration[genre]) {
         fundedDuration[genre] = 0;
       }
@@ -183,6 +183,10 @@ export default class Statistic extends AbstractSmart {
 
   getTemplate() {
     return createStatisticsTemplate(this._statistic, this._currentType);
+  }
+
+  recoveryListeners() {
+    this._subscribeToEvents();
   }
 
   rerender() {

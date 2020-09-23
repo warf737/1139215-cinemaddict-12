@@ -1,14 +1,14 @@
 import BoardPresenter from "./presenter/board";
 import FilterPresenter from "./presenter/filter";
 import Board from "./view/board";
-import {generateFilmCards} from "./mock/film-card";
-import {render} from "./utils/render";
-import FilmCardModel from "./models/cards";
+import Statistics from "./view/statistics";
+import Navigation from "./view/navigation";
 import Footer from "./view/footer";
 import CommentsModel from "./models/comments";
-import Statictics from "./view/statistics";
+import FilmCardModel from "./models/cards";
 import {NavigationItem} from "./const";
-import Navigation from "./view/navigation";
+import {generateFilmCards} from "./mock/film-card";
+import {render} from "./utils/render";
 
 const siteMainElement = document.querySelector(`.main`);
 
@@ -33,9 +33,9 @@ filterPresenter.render();
 
 // main - films-list
 const board = new Board(films);
-render(siteMainElement, board);
-
 const boardPresenter = new BoardPresenter(board, models);
+
+render(siteMainElement, board);
 boardPresenter.render(films);
 
 // footer
@@ -43,7 +43,7 @@ const footer = document.querySelector(`.footer__statistics`);
 render(footer, new Footer(films.length));
 
 // statistics
-const statistics = new Statictics(filmsCardsModel);
+const statistics = new Statistics(filmsCardsModel);
 render(siteMainElement, statistics);
 statistics.hide();
 

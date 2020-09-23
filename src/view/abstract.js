@@ -28,13 +28,13 @@ export default class AbstractComponent {
 
   show() {
     if (this._element) {
-      this._element.classLisr.remove(HIDDEN_CLASS);
+      this._element.classList.remove(HIDDEN_CLASS);
     }
   }
 
   hide() {
     if (this._element) {
-      this._element.classLisr.add(HIDDEN_CLASS);
+      this._element.classList.add(HIDDEN_CLASS);
     }
   }
 }
