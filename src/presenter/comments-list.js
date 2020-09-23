@@ -19,7 +19,7 @@ export default class CommentsController {
 
     this._commentsComponent.setButtonKeydownHandler((evt) => {
       if ((evt.key === `Enter`) && (evt.ctrlKey || evt.metaKey)) {
-        this._onCommentDataChange(null, this._container.getData());
+        this._onCommentDataChange(this, null, this._container.getData());
       }
     });
     render(this._container.getCommentsElement(), this._commentsComponent);

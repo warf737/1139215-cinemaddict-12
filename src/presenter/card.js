@@ -124,7 +124,7 @@ export default class FilmCardPresenter {
   }
 
   _renderComments() {
-    new CommentsPresenter(this._detailPopupComponent, this._commentsModel, this._onDataChange.bind(this, this)).render();
+    new CommentsPresenter(this._detailPopupComponent, this._api, this._commentsModel, this._onDataChange.bind(this, this)).render();
   }
 
   setDefaultView() {

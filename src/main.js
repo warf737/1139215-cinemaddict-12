@@ -1,3 +1,4 @@
+import Connect from "./connect";
 import BoardPresenter from "./presenter/board";
 import FilterPresenter from "./presenter/filter";
 import Board from "./view/board";
@@ -7,20 +8,24 @@ import Footer from "./view/footer";
 import CommentsModel from "./models/comments";
 import FilmCardModel from "./models/cards";
 import {NavigationItem} from "./const";
-import {generateFilmCards} from "./mock/film-card";
 import {render} from "./utils/render";
 
 const siteMainElement = document.querySelector(`.main`);
+const AUTHORIZATION = `Basic TVEGx1PuH0yssK3`;
+const connect = new Connect(AUTHORIZATION);
 
-const FILMS_COUNT = 22;
-const films = generateFilmCards(FILMS_COUNT);
+connect.getFilms()
+  .then((films) => {
+    filmsCardsModel.setFilms(films);
+  })
+  .then((comments) => {
+    commentsModel.setComments(comments);
+  });
 
 // films
 const filmsCardsModel = new FilmCardModel();
-filmsCardsModel.setFilms(films);
 
 const commentsModel = new CommentsModel();
-commentsModel.setComments(films);
 const models = {filmsCardsModel, commentsModel};
 
 // main - navigation

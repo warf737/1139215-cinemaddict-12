@@ -48,7 +48,6 @@ export default class BoardPresenter {
     this._noFilmCards = new NoFilmCardsView();
     this._loadMoreButton = new LoadMoreButtonView();
     this._sortComponent = new SortView();
-    this._avatarComponent = new UserAvatar(this._filmsCardsModel.getFilmsAll());
 
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
@@ -80,6 +79,7 @@ export default class BoardPresenter {
       return;
     }
 
+    this._renderAvatar();
     render(this._header, this._avatarComponent);
     render(this._container.getElement(), this._sortComponent, RenderPosition.AFTERBEGIN);
 
@@ -88,6 +88,9 @@ export default class BoardPresenter {
     this._renderLoadMoreButton();
   }
 
+  _renderAvatar() {
+    this._avatarComponent = new UserAvatar(this._filmsCardsModel.getFilmsAll());
+  }
 
   _renderExtraFilms() {
     const additionalFilmsElement = this._container.getElement().querySelectorAll(`.films-list--extra .films-list__container`);

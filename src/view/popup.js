@@ -20,7 +20,7 @@ const createButtonMarkup = (name, content, isChecked) => {
 };
 
 const createPopUpTemplate = (film) => {
-  const {poster, title, age, director, writers, actors, rating, date, duration, country, genres, currentDescription} = film;
+  const {poster, title, altTitle, age, director, writers, actors, rating, date, duration, country, genres, currentDescription} = film;
   const genresMarkup = createGenresMarkup(genres);
   const genreTerm = genres.length > 1 ? `Genres` : `Genre`;
 
@@ -47,7 +47,7 @@ const createPopUpTemplate = (film) => {
             <div class="film-details__info-head">
               <div class="film-details__title-wrap">
                 <h3 class="film-details__title">${title}</h3>
-                <p class="film-details__title-original">Original: ${title}</p>
+                <p class="film-details__title-original">Original: ${altTitle}</p>
               </div>
 
               <div class="film-details__rating">
