@@ -12,43 +12,6 @@ const createGenresMarkup = (genres) => {
     .join(`\n`);
 };
 
-const createEmojiListMarkup = (names) => {
-  return names
-    .map((emojiName) => {
-      return (
-        `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emojiName}" value="${emojiName}">
-          <label class="film-details__emoji-label" for="emoji-${emojiName}">
-            <img src="./images/emoji/${emojiName}.png" width="30" height="30" alt="emoji">
-          </label>`
-      );
-    })
-    .join(`\n`);
-};
-
-const createCommentsWrapMarkup = (comments, commentsMarkup, emojiListMarkup) => {
-  return (
-    `<section class="film-details__comments-wrap">
-        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
-
-        <ul class="film-details__comments-list">
-          ${commentsMarkup}
-        </ul>
-
-        <div class="film-details__new-comment">
-          <div for="add-emoji" class="film-details__add-emoji-label"></div>
-
-          <label class="film-details__comment-label">
-            <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
-          </label>
-
-          <div class="film-details__emoji-list">
-            ${emojiListMarkup}
-          </div>
-        </div>
-      </section>`
-  );
-};
-
 const createButtonMarkup = (name, content, isChecked) => {
   return (
     `<input type="checkbox" class="film-details__control-input film-details__control-input--${name} visually-hidden" id="${name}" name="${name}" ${isChecked ? `checked` : ``}>

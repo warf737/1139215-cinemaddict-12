@@ -1,7 +1,7 @@
 import FilmCardView from "../view/card";
 import DetailPopupView from "../view/popup";
 import {replace, render, remove} from "../utils/render";
-import CommentsPresenter from "./comment";
+import CommentsPresenter from "./comments-list";
 
 const siteBody = document.querySelector(`body`);
 

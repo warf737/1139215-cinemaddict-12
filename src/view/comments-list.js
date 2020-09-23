@@ -1,23 +1,24 @@
 import {emojies} from "../const";
-import AbstractComponent from "./abstract";
+import AbstractSmartComponent from "./abstract-smart";
 
 const createEmojiListMarkup = (names) => {
-  return names.map((emoji) => {
-    return (`
-      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
-      <label class="film-details__emoji-label" for="emoji-${emoji}">
-       <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="emoji">
-      </label>
-    `);
-  })
+  return names
+    .map((emojiName) => {
+      return (
+        `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emojiName}" value="${emojiName}">
+          <label class="film-details__emoji-label" for="emoji-${emojiName}">
+            <img src="./images/emoji/${emojiName}.png" width="30" height="30" alt="emoji">
+          </label>`
+      );
+    })
     .join(`\n`);
 };
 
-const createDetailPopupTemplate = (film) => {
-  const emojiesMarkup = createEmojiListMarkup(emojies);
+const createFilmDetailsTemplate = (film) => {
+  const emojiListMarkup = createEmojiListMarkup(emojies);
   const {commentsCount} = film;
-  return (`
-      <section class="film-details__comments-wrap">
+  return (
+    `<section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${commentsCount}</span></h3>
 
         <ul class="film-details__comments-list"></ul>
@@ -30,24 +31,24 @@ const createDetailPopupTemplate = (film) => {
           </label>
 
           <div class="film-details__emoji-list">
-            ${emojiesMarkup}
+            ${emojiListMarkup}
           </div>
         </div>
-      </section>
-  `);
+      </section>`
+  );
 };
 
-export default class FilmDetail extends AbstractComponent {
+export default class FilmDetails extends AbstractSmartComponent {
   constructor(film) {
     super();
 
     this._film = film;
 
-    this._subscribeToEvents();
+    this._subscribeOnEvents();
   }
 
   getTemplate() {
-    return createDetailPopupTemplate(this._film);
+    return createFilmDetailsTemplate(this._film);
   }
 
   getCommentsListElement() {
@@ -59,14 +60,14 @@ export default class FilmDetail extends AbstractComponent {
       .addEventListener(`keydown`, handler);
   }
 
-  _subscribeToEvents() {
+  _subscribeOnEvents() {
     const element = this.getElement();
 
     const emojiElement = element.querySelector(`.film-details__add-emoji-label`);
     element.querySelectorAll(`.film-details__emoji-label`)
-      .forEach((el) => {
-        el.addEventListener(`click`, () => {
-          const link = el.querySelector(`img`).src;
+      .forEach((elem) => {
+        elem.addEventListener(`click`, () => {
+          const link = elem.querySelector(`img`).src;
           emojiElement.innerHTML = `<img src=${link} width="55" height="55" alt="emoji">`;
         });
       });

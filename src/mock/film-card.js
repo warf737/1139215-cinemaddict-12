@@ -76,15 +76,7 @@ const generateFilmCard = () => {
   const getId = () => {
     return Number(Date.now()) + Math.random();
   };
-  const comments = generateComments(getRandomInteger(0,3).map((comment) => {
-    Object.assign(
-        {},
-        comment,
-        {
-          id: getId()
-        }
-    );
-  }));
+  const comments = generateComments(getRandomInteger(0, 3)).map((comment) => Object.assign({}, comment, {id: getId()}));
 
   return {
     id: getId(),
