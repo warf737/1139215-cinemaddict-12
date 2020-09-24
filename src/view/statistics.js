@@ -31,7 +31,7 @@ const getWatchedStatistic = (films, filterType) => {
   }, 0);
 
   const genres = watchedFilms.reduce((fundedDuration, film) => {
-    film.genres.forEach((genre) => {
+    film.genreNames.forEach((genre) => {
       if (!fundedDuration[genre]) {
         fundedDuration[genre] = 0;
       }
