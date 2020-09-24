@@ -10,7 +10,7 @@ const parseFormData = (formData) => {
     "id": null,
     "author": null,
     "comment": formData.get(`comment`),
-    "emotion": formData.get(`comment--emoji`),
+    "emotion": formData.get(`comment-emoji`),
     "date": new Date().toISOString(),
   }, null);
 };

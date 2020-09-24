@@ -4,7 +4,6 @@ import Abstract from "./abstract";
 const createEmojiListMarkup = (names) => {
   return names
     .map((emojiName) => {
-      console.log('1', emojiName);
       return (
         `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emojiName}" value="${emojiName}">
           <label class="film-details__emoji-label" for="emoji-${emojiName}">

@@ -6,7 +6,6 @@ const DefaultData = {
 };
 
 const createCommentTemplate = (comment, options) => {
-  console.log('2', comment);
   const {emoji, text, author, day} = comment;
   const {externalData} = options;
   const deleteButtonText = externalData.deleteButtonText;
