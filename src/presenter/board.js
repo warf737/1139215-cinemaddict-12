@@ -9,9 +9,9 @@ import UserAvatar from "../view/avatar";
 const CARDS_COUNT = 5;
 const ADDITIONAL_CARDS_COUNT = 2;
 
-const renderFilmCards = (filmElement, films, comments, onDataChange, onViewChange) => {
+const renderFilmCards = (filmElement, films, comments, api, onDataChange, onViewChange) => {
   return films.map((film) => {
-    const cardPresenter = new CardPresenter(filmElement, comments, onDataChange, onViewChange);
+    const cardPresenter = new CardPresenter(filmElement, comments, api, onDataChange, onViewChange);
     cardPresenter.render(film);
     return cardPresenter;
   });
@@ -38,10 +38,11 @@ const getSortedFilmCards = (films, sort, from, to) => {
 
 export default class BoardPresenter {
 
-  constructor(container, models) {
+  constructor(container, models, api) {
     this._container = container;
     this._filmsCardsModel = models.filmsCardsModel;
     this._commentsModel = models.commentsModel;
+    this._api = api;
 
     this._showedFilmCards = [];
     this._displayingCardsCount = CARDS_COUNT;
@@ -98,16 +99,17 @@ export default class BoardPresenter {
     const topRatedFilms = this._filmsCardsModel.getFilms().slice(0).sort((a, b) => b.rating - a.rating).slice(0, ADDITIONAL_CARDS_COUNT);
     const mostCommentedFilms = this._filmsCardsModel.getFilms().slice(0).sort((a, b) => b.commentsCount - a.commentsCount).slice(0, ADDITIONAL_CARDS_COUNT);
 
-    const topRatedFilmCards = renderFilmCards(additionalFilmsElement[0], topRatedFilms, this._commentsModel, this._onDataChange, this._onViewChange);
+    const topRatedFilmCards = renderFilmCards(additionalFilmsElement[0], topRatedFilms, this._commentsModel, this._api, this._onDataChange, this._onViewChange);
     this._showedFilmCards = this._showedFilmCards.concat(topRatedFilmCards);
 
-    const mostCommentedFilmCards = renderFilmCards(additionalFilmsElement[1], mostCommentedFilms, this._commentsModel, this._onDataChange, this._onViewChange);
+    const mostCommentedFilmCards = renderFilmCards(additionalFilmsElement[1], mostCommentedFilms, this._commentsModel, this._api, this._onDataChange, this._onViewChange);
     this._showedFilmCards = this._showedFilmCards.concat(mostCommentedFilmCards);
 
   }
 
   _renderFilmsCards(films) {
-    const newFilmCards = renderFilmCards(this._filmsListContainer, films, this._commentsModel, this._onDataChange, this._onViewChange);
+    // const newFilmCards = renderFilmCards(this._filmsListContainer.getElement()
+    const newFilmCards = renderFilmCards(this._filmsListContainer, films, this._commentsModel, this._api, this._onDataChange, this._onViewChange);
     this._showedFilmCards = this._showedFilmCards.concat(newFilmCards);
   }
 
@@ -123,7 +125,7 @@ export default class BoardPresenter {
     }
 
     render(this._filmsListElement, this._loadMoreButton);
-    // показ карточек фильма по нажатию на кнопку показать больше
+
     this._loadMoreButton.setClickHandler(this._onLoadMoreButtonClick);
   }
 
@@ -137,19 +139,17 @@ export default class BoardPresenter {
   }
 
   _onDataChange(filmCardPresenter, oldData, newData) {
-    const isSuccess = this._filmsCardsModel.updateFilm(oldData.id, newData);
-
-    if (isSuccess) {
-      if (document.querySelector(`body`).contains(document.querySelector(`.film-details`))) {
-        filmCardPresenter.render(newData);
-        this._updateFilms(this._displayingCardsCount);
-      } else {
-        this._updateFilms(this._displayingCardsCount);
-      }
-      remove(this._avatarComponent);
-      this._avatarComponent = new UserAvatar(this._filmsCardsModel.getFilmsAll());
-      render(this._header, this._avatarComponent);
-    }
+    this._api.updateFilm(oldData.id, newData)
+      .then((filmsModel) => {
+        const isSuccess = this._filmsCardsModel.updateFilm(oldData.id, filmsModel);
+        if (isSuccess) {
+          filmCardPresenter.render(filmsModel);
+          this._updateFilms(this._displayingCardsCount);
+          remove(this._avatarComponent);
+          this._avatarComponent = new UserAvatar(this._filmsCardsModel.getFilmsAll());
+          render(this._header, this._avatarComponent);
+        }
+      });
   }
 
   _onViewChange() {

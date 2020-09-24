@@ -2,6 +2,7 @@ import FilmCardView from "../view/card";
 import DetailPopupView from "../view/popup";
 import {replace, render, remove} from "../utils/render";
 import CommentsPresenter from "./comments-list";
+import FilmCardModel from "../models/card";
 
 const siteBody = document.querySelector(`body`);
 
@@ -11,13 +12,14 @@ const Mode = {
 };
 
 export default class FilmCardPresenter {
-  constructor(container, commentsModel, onDataChange, onViewChange) {
+  constructor(container, commentsModel, api, onDataChange, onViewChange) {
     this._container = container;
     this._filmCardComponent = null;
     this._onDataChange = onDataChange;
     this._onViewChange = onViewChange;
     this._commentsModel = commentsModel;
     this._mode = Mode.DEFAULT;
+    this._api = api;
 
     this._filmCardComponent = null;
     this._detailPopupComponent = null;
@@ -45,65 +47,41 @@ export default class FilmCardPresenter {
     });
 
     this._filmCardComponent.setWatchlistButtonClickHandler(() => {
-      this._onDataChange(this, film, Object.assign(
-          {},
-          film,
-          {
-            isWatchlist: !film.isWatchlist
-          }
-      ));
+      const newCard = FilmCardModel.clone(film);
+      newCard.isWatchlist = !newCard.isWatchlist;
+      this._onDataChange(this, film, newCard);
     });
 
     this._filmCardComponent.setFavoritesButtonClickHandler(() => {
-      this._onDataChange(this, film, Object.assign(
-          {},
-          film,
-          {
-            isFavorite: !film.isFavorite
-          }
-      ));
+      const newCard = FilmCardModel.clone(film);
+      newCard.isFavorite = !newCard.isFavorite;
+      this._onDataChange(this, film, newCard);
     });
 
     this._filmCardComponent.setHistoryButtonClickHandler(() => {
-      this._onDataChange(this, film, Object.assign(
-          {},
-          film,
-          {
-            isHistory: !film.isHistory,
-            watchingDate: new Date(),
-          }
-      ));
+      const newCard = FilmCardModel.clone(film);
+      newCard.isHistory = !newCard.isHistory;
+      newCard.watchingDate = newCard.watchingDate ? null : new Date();
+      this._onDataChange(this, film, newCard);
     });
 
     this._detailPopupComponent.setWatchlistButtonClickHandler(() => {
-      this._onDataChange(this, film, Object.assign(
-          {},
-          film,
-          {
-            isWatchlist: !film.isWatchlist
-          }
-      ));
+      const newCard = FilmCardModel.clone(film);
+      newCard.isWatchlist = !newCard.isWatchlist;
+      this._onDataChange(this, film, newCard);
     });
 
     this._detailPopupComponent.setFavoritesButtonClickHandler(() => {
-      this._onDataChange(this, film, Object.assign(
-          {},
-          film,
-          {
-            isFavorite: !film.isFavorite
-          }
-      ));
+      const newCard = FilmCardModel.clone(film);
+      newCard.isFavorite = !newCard.isFavorite;
+      this._onDataChange(this, film, newCard);
     });
 
     this._detailPopupComponent.setHistoryButtonClickHandler(() => {
-      this._onDataChange(this, film, Object.assign(
-          {},
-          film,
-          {
-            isHistory: !film.isHistory,
-            watchingDate: new Date(),
-          }
-      ));
+      const newCard = FilmCardModel.clone(film);
+      newCard.isHistory = !newCard.isHistory;
+      newCard.watchingDate = newCard.watchingDate ? null : new Date();
+      this._onDataChange(this, film, newCard);
     });
 
     this._detailPopupComponent.closeButtonClickHandler((evt) => {
@@ -111,7 +89,7 @@ export default class FilmCardPresenter {
       this._closeCard();
     });
 
-    if (oldDetailPopupComponent) {
+    if (oldDetailPopupComponent && oldFilmCardComponent) {
       replace(this._filmCardComponent, oldFilmCardComponent);
       replace(this._detailPopupComponent, oldDetailPopupComponent);
       if (this._mode === Mode.EDIT) {

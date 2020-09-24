@@ -43,7 +43,7 @@ export default class FilmCard {
         },
         "runtime": this.duration,
         "genre": [...this.genreNames],
-        "description": this.duration
+        "description": this.currentDescription
       },
       "user_details": {
         "watchlist": this.isWatchlist,
@@ -64,5 +64,9 @@ export default class FilmCard {
 
   static clone(data) {
     return new FilmCard(data.toRAW());
+  }
+
+  removeComment(id) {
+    this._comments = this.comments.filter((comment) => comment.id !== id);
   }
 }

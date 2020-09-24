@@ -20,9 +20,9 @@ const createButtonMarkup = (name, content, isChecked) => {
 };
 
 const createPopUpTemplate = (film) => {
-  const {poster, title, altTitle, age, director, writers, actors, rating, date, duration, country, genres, currentDescription} = film;
-  const genresMarkup = createGenresMarkup(genres);
-  const genreTerm = genres.length > 1 ? `Genres` : `Genre`;
+  const {poster, title, altTitle, age, director, writers, actors, rating, date, duration, country, genreNames, currentDescription} = film;
+  const genresMarkup = createGenresMarkup(genreNames);
+  const genreTerm = genreNames.length > 1 ? `Genres` : `Genre`;
 
   const description = encode(currentDescription);
   const watchlistButton = createButtonMarkup(`watchlist`, `Add-to-watchlist`, film.isWatchlist);
@@ -38,7 +38,7 @@ const createPopUpTemplate = (film) => {
         </div>
         <div class="film-details__info-wrap">
           <div class="film-details__poster">
-            <img class="film-details__poster-img" src="./images/posters/${poster}" alt="">
+            <img class="film-details__poster-img" src="${poster}" alt="">
 
             <p class="film-details__age">${age}+</p>
           </div>
@@ -62,11 +62,11 @@ const createPopUpTemplate = (film) => {
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Writers</td>
-                <td class="film-details__cell">${writers}</td>
+                <td class="film-details__cell">${writers.join(`, `)}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Actors</td>
-                <td class="film-details__cell">${actors}</td>
+                <td class="film-details__cell">${actors.join(`, `)}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Release Date</td>
@@ -128,12 +128,7 @@ export default class DetailPopup extends Abstract {
 
   getData() {
     const form = this.getElement().querySelector(`.film-details__inner`);
-    const formData = new FormData(form);
-
-    return {
-      emoji: formData.get(`comment-emoji`),
-      text: formData.get(`comment`)
-    };
+    return new FormData(form);
   }
 
   recoveryListeners() {

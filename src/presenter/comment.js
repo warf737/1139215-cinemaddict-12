@@ -10,7 +10,7 @@ export default class CommentPresenter {
   render(comment) {
     this._commentComponent = new Comment(comment);
     this._commentComponent.setDeleteButtonClickHandler(()=> {
-      this._onDataChange(this, comment, null);
+      this._onDataChange(comment, null);
     });
 
     const containerElement = this._container.getCommentsListElement();

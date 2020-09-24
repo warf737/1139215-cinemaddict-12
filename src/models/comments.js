@@ -5,19 +5,8 @@ export default class Comments {
     this._dataChangeHandlers = [];
   }
 
-  setComments(films) {
-    this._comments = [];
-    films.forEach((film) => {
-      film.comments.forEach((comment) => {
-        this._comments.push(Object.assign(
-            {},
-            comment,
-            {
-              filmId: film.id
-            }
-        ));
-      });
-    });
+  setComments(comments) {
+    this._comments = this._comments.concat(...comments);
   }
 
   getComments(film) {
@@ -36,11 +25,9 @@ export default class Comments {
     return true;
   }
 
-  addComment(comment) {
-    comment.id = Number(Date.now()) + Math.random();
-    comment.author = `Server random`;
-    comment.date = new Date().toISOString();
-    this._comments = [].concat(comment, this._comments);
+  updateComments(comments, filmId) {
+    this._comments = this._comments.concat((comment) => comment.filmId !== filmId);
+    this._comments = [].concat(this._comments, comments);
     this._callHandlers(this._dataChangeHandlers);
   }
 
