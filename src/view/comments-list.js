@@ -19,7 +19,7 @@ const createFilmDetailsTemplate = (film) => {
   const emojiListMarkup = createEmojiListMarkup(emojies);
   return (
     `<section class="film-details__comments-wrap">
-        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${film.comments.filter.count}</span></h3>
+        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${film.comments.length}</span></h3>
 
         <ul class="film-details__comments-list"></ul>
 

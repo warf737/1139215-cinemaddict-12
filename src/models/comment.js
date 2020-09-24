@@ -5,14 +5,14 @@ export default class Comment {
     this.author = data[`author`];
     this.text = data[`comment`];
     this.day = data[`date`];
-    this.emoji = data[`emoji`];
+    this.emoji = data[`emotion`];
   }
 
   toRAW() {
     return {
-      comment: this.text,
-      date: this.day.toISOString(),
-      emotion: this.emoji
+      "comment": this.text,
+      "date": this.day.toISOString(),
+      "emotion": this.emoji
     };
   }
 
