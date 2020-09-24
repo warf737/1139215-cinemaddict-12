@@ -23,6 +23,7 @@ export default class FilmCardPresenter {
 
     this._filmCardComponent = null;
     this._detailPopupComponent = null;
+
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
   }
 
@@ -113,7 +114,6 @@ export default class FilmCardPresenter {
 
   destroy() {
     remove(this._filmCardComponent);
-    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
   _closeCard() {
