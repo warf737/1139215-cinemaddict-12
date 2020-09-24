@@ -85,7 +85,5 @@ export default class CommentsController {
           controller.shake();
         });
     }
-
-    this._onDataChange(film, Object.assign({}, film, {commentsCount: this._commentsModel.getComments(film).length}));
   }
 }

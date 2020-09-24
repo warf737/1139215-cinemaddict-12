@@ -22,7 +22,7 @@ export default class CommentPresenter {
     render(containerElement, this._commentComponent);
   }
 
-  snake() {
+  shake() {
     this._commentComponent.getElement().style.animation = `shake ${ANIMATION_TIMEOUT / 1000}s`;
 
     setTimeout(() => {

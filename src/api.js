@@ -63,7 +63,7 @@ export default class Api {
     return this._load({
       url: `movies/${id}`,
       method: Method.PUT,
-      bode: JSON.stringify(data.toRAW()),
+      body: JSON.stringify(data.toRAW()),
       headers: new Headers({"Content-Type": `application/json`})
     })
       .then((res)=> res.json())

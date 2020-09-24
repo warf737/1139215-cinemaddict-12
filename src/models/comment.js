@@ -4,7 +4,7 @@ export default class Comment {
     this.id = data[`id`];
     this.author = data[`author`];
     this.text = data[`comment`];
-    this.day = data[`date`];
+    this.day = new Date(data[`date`]);
     this.emoji = data[`emotion`];
   }
 
