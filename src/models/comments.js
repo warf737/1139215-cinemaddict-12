@@ -26,7 +26,7 @@ export default class Comments {
   }
 
   updateComments(comments, filmId) {
-    this._comments = this._comments.concat((comment) => comment.filmId !== filmId);
+    this._comments = this._comments.filter((comment) => comment.filmId !== filmId);
     this._comments = [].concat(this._comments, comments);
     this._callHandlers(this._dataChangeHandlers);
   }

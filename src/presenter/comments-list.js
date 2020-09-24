@@ -1,6 +1,6 @@
 import {render} from "../utils/render.js";
 import CommentsComponent from "../view/comments-list";
-import CommentController from "../presenter/comment";
+import CommentPresenter from "../presenter/comment";
 import CommentModel from "../models/comment";
 import FilmCardModel from "../models/card";
 import {ANIMATION_TIMEOUT} from "../const";
@@ -15,7 +15,7 @@ const parseFormData = (formData) => {
   }, null);
 };
 
-export default class CommentsController {
+export default class CommentsPresenter {
   constructor(container, api, commentsModel, onDataChange) {
     this._container = container;
     this._commentsModel = commentsModel;
@@ -56,23 +56,23 @@ export default class CommentsController {
   _renderComments() {
     const film = this._container.film;
     this._commentsModel.getComments(film).forEach((comment) => {
-      new CommentController(this._commentsComponent, this._onCommentDataChange).render(comment);
+      new CommentPresenter(this._commentsComponent, this._onCommentDataChange).render(comment);
     });
   }
 
-  _onCommentDataChange(controller, oldData, newData) {
+  _onCommentDataChange(presenter, oldData, newData) {
     const film = this._container.film;
     const newCard = FilmCardModel.clone(film);
     if (newData === null) {
       this._api.deleteComment(oldData.id)
         .then(() => {
-          if (this._commentsModel.removeComment(oldData.is)) {
+          if (this._commentsModel.removeComment(oldData.id)) {
             newCard.removeComment(oldData.is);
             this._onDataChange(film, newCard);
           }
         })
         .catch(() => {
-          controller.shake();
+          presenter.shake();
         });
     } else if (oldData === null) {
       this._api.createComment(newData, film.id)
@@ -82,7 +82,7 @@ export default class CommentsController {
           this._onDataChange(film, newCard);
         })
         .catch(() => {
-          controller.shake();
+          presenter.shake();
         });
     }
   }

@@ -132,7 +132,6 @@ export default class BoardPresenter {
   }
 
   _renderFilmsCards(films) {
-    // const newFilmCards = renderFilmCards(this._filmsListContainer.getElement()
     const newFilmCards = renderFilmCards(this._filmsListContainer, films, this._commentsModel, this._api, this._onDataChange, this._onViewChange);
     this._showedFilmCards = this._showedFilmCards.concat(newFilmCards);
   }

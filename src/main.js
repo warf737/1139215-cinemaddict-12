@@ -58,7 +58,7 @@ api.getFilms()
         boardPresenter.resetSortType();
         statistics.hide();
       } else {
-        board.hide();
+        boardPresenter.hide();
         statistics.show();
       }
     });

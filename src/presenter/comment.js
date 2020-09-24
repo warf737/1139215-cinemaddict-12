@@ -14,8 +14,8 @@ export default class CommentPresenter {
       this._commentComponent.setData({
         deleteButtonText: `Deleting...`,
       });
-      this._commentComponent.getDeleteButton().setAttribute(`disabled`, true);
-      this._onDataChange(comment, null);
+      this._commentComponent.getDeleteButton().setAttribute(`disabled`, `true`);
+      this._onDataChange(this, comment, null);
     });
 
     const containerElement = this._container.getCommentsListElement();
