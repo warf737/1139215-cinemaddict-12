@@ -36,4 +36,6 @@ const StatisticFilterType = {
 
 const StatisticFilterTypes = Object.values(StatisticFilterType);
 
-export {FilterType, emojies, SortType, NavigationItem, StatisticFilterType, StatisticFilterTypes};
+const ANIMATION_TIMEOUT = 600;
+
+export {FilterType, emojies, SortType, NavigationItem, StatisticFilterType, StatisticFilterTypes, ANIMATION_TIMEOUT};

@@ -37,6 +37,7 @@ export default class FilmCardPresenter {
 
       this._onViewChange();
       siteBody.appendChild(this._detailPopupComponent.getElement());
+      siteBody.classList.add(`hide-overflow`);
       this._renderComments();
       const popup = document.querySelector(`.film-details`);
       if (popup.length > 1) {
@@ -95,7 +96,6 @@ export default class FilmCardPresenter {
       if (this._mode === Mode.EDIT) {
         this._renderComments();
       }
-      document.addEventListener(`keydown`, this._onEscKeyDown);
     } else {
       render(this._container, this._filmCardComponent);
     }
@@ -118,6 +118,7 @@ export default class FilmCardPresenter {
 
   _closeCard() {
     siteBody.removeChild(this._detailPopupComponent.getElement());
+    siteBody.classList.remove(`hide-overflow`);
     document.removeEventListener(`keydown`, this._onEscKeyDown);
     this._mode = Mode.DEFAULT;
   }

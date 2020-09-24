@@ -66,7 +66,6 @@ export default class Api {
       bode: JSON.stringify(data.toRAW()),
       headers: new Headers({"Content-Type": `application/json`})
     })
-      .then(checkStatus)
       .then((res)=> res.json())
       .then(FilmCard.parseFilmCard);
   }

@@ -1,5 +1,5 @@
-import Abstract from "./abstract";
-import {formatTime, formatPopupDate} from "../utils/moment";
+import AbstractSmart from "./abstract";
+import {formatTime, formatPopupDate} from "../utils/common";
 import {encode} from "he";
 
 const createGenresMarkup = (genres) => {
@@ -107,7 +107,7 @@ const createPopUpTemplate = (film) => {
   );
 };
 
-export default class DetailPopup extends Abstract {
+export default class DetailPopup extends AbstractSmart {
   constructor(film) {
     super();
     this._film = film;

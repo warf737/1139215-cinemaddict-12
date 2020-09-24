@@ -1,4 +1,4 @@
-import {formatTime, formatDate} from "../utils/moment";
+import {formatTime, formatDate} from "../utils/common";
 import {encode} from "he";
 import Abstract from "./abstract-smart";
 
