@@ -54,8 +54,8 @@ api.getFilms()
 
     navigation.setClickHandler((item) => {
       if (item === NavigationItem.FILTER) {
-        board.show();
-        board.resetSortType();
+        boardPresenter.show();
+        boardPresenter.resetSortType();
         statistics.hide();
       } else {
         board.hide();
